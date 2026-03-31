@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-adipa-purple: #704efd;
+  --color-adipa-purple-dark: #5232d4;
+  --color-adipa-cyan: #2cb7ff;
+  --color-adipa-brand-purple: #7d61f1;
+  --color-adipa-brand-blue: #72caf7;
+  --color-adipa-pink: #ff017c;
+  --color-adipa-deep-purple: #1f0a73;
+  --color-adipa-footer-bg: #3a3f5a;
+  --color-adipa-light-bg: #f3f4ff;
+  --color-adipa-filter-bg: #f0f3fd;
+  --color-adipa-border: #e5e5e5;
+  --color-adipa-text-primary: #1d1d1d;
+  --color-adipa-text-secondary: #5b6987;
+  --color-adipa-error: #dd1f33;
+  --color-adipa-success: #26990b;
+  --color-adipa-modality-live: #26990b;
+  --color-adipa-modality-online: #ffa927;
+  --color-adipa-modality-presencial: #ff017c;
+
+  /* Fonts */
+  --font-poppins: "Poppins", sans-serif;
+
+  /* Box shadows */
+  --shadow-card: 0 4px 4.7px 0 rgba(0, 0, 0, 0.1);
+  --shadow-card-hover: 0 12px 22px rgba(0, 60, 91, 0.05);
+  --shadow-header: 0 4px 17px rgba(201, 201, 201, 0.25);
+  --shadow-dropdown: 0 15px 35px rgba(0, 18, 87, 0.08);
+
+  /* Max widths */
+  --max-width-container: 1400px;
+
+  /* Border radius */
+  --radius-card: 10px;
+
+  /* Breakpoints */
+  --breakpoint-mobile: 375px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1280px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  color: #1d1d1d;
+}
