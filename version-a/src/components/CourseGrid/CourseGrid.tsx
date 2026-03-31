@@ -35,7 +35,9 @@ export default function CourseGrid({ className = "" }: CourseGridProps) {
           role="tabpanel"
         >
           {filteredCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
+            <div key={course.id} className="animate-fade-in">
+              <CourseCard course={course} />
+            </div>
           ))}
         </div>
 
