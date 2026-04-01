@@ -48,14 +48,14 @@ function FilterSection({
   const [open, setOpen] = useState(true);
 
   return (
-    <div style={{ borderBottom: "1px solid rgba(0,0,0,.1)" }}>
+    <div className="border-b border-divider">
       <button
         type="button"
         className="w-full text-left py-[15px] flex items-center justify-between"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
       >
-        <span className="font-semibold text-[14px]" style={{ color: "#13013f" }}>
+        <span className="font-semibold text-[14px] text-[#13013f]">
           {title}
         </span>
         <ChevronIcon open={open} />
@@ -81,15 +81,7 @@ function CheckboxItem({
   return (
     <label htmlFor={id} className="flex items-center gap-3 py-1.5 cursor-pointer">
       <span
-        className="flex-shrink-0 flex items-center justify-center"
-        style={{
-          width: 18,
-          height: 18,
-          border: checked ? "1px solid #2cb7ff" : "1px solid rgba(19,1,63,.3)",
-          borderRadius: 3,
-          background: checked ? "#2cb7ff" : "white",
-          transition: "background .15s, border-color .15s",
-        }}
+        className={`flex-shrink-0 flex items-center justify-center w-[18px] h-[18px] rounded-[3px] transition-[background,border-color] duration-150 ${checked ? "bg-adipa-cyan border border-adipa-cyan" : "bg-white border border-[rgba(19,1,63,0.3)]"}`}
         aria-hidden="true"
       >
         {checked && (
@@ -112,12 +104,7 @@ function CheckboxItem({
         className="sr-only"
       />
       <span
-        className="text-sm"
-        style={
-          active
-            ? { borderLeft: "2px solid #704efd", paddingLeft: 6, color: "#704efd" }
-            : { color: "#1d1d1d" }
-        }
+        className={`text-sm ${active ? "border-l-2 border-l-adipa-purple pl-[6px] text-adipa-purple" : "text-adipa-text-primary"}`}
       >
         {label}
       </span>
@@ -162,11 +149,10 @@ function SidebarInner({ filters, onFiltersChange, onClearFilters, onClose }: Sid
     filters.priceRange[1] < MAX_PRICE;
 
   return (
-    <div className="bg-white h-full" style={{ borderRight: "1px solid rgba(0,0,0,.1)" }}>
+    <div className="bg-white h-full border-r border-divider">
       {/* Header row */}
       <div
-        className="flex items-center justify-between px-4 py-3"
-        style={{ borderBottom: "1px solid rgba(0,0,0,.1)" }}
+        className="flex items-center justify-between px-4 py-3 border-b-2 border-b-black/[0.12]"
       >
         {onClose ? (
           <button
@@ -178,34 +164,21 @@ function SidebarInner({ filters, onFiltersChange, onClearFilters, onClose }: Sid
             &times;
           </button>
         ) : (
-          <span style={{ fontWeight: 400, fontSize: "18px", color: "#1d1d1d" }}>
+          <span className="font-normal text-[14px] leading-[22px] text-[#838383]">
             Filtros
           </span>
         )}
         <button
           type="button"
           onClick={onClearFilters}
-          className="text-sm font-medium transition-colors duration-200"
-          style={{
-            background: "#704efd",
-            color: "white",
-            borderRadius: "20px",
-            padding: "8px 20px",
-            fontSize: "14px",
-          }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = "#5a3ad8";
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = "#704efd";
-          }}
+          className="font-medium transition-colors duration-200 bg-[#F3F4FF] text-adipa-purple rounded-[5px] px-[10px] py-[5px] text-xs leading-[16px] border border-[#F3F4FF] no-underline hover:bg-adipa-purple hover:text-white hover:border-adipa-purple"
         >
           Borrar filtros
         </button>
       </div>
 
       {/* Divider line below header */}
-      <div style={{ borderBottom: "1px solid rgba(0,0,0,0.1)" }} />
+      <div className="border-b border-divider" />
 
       {/* Filter sections */}
       <div className="px-4">
@@ -308,8 +281,7 @@ export default function SidebarFilter({
     <>
       {/* Desktop sidebar */}
       <div
-        className="hidden tablet:block"
-        style={{ width: 280, height: "80vh", overflowY: "auto", flexShrink: 0 }}
+        className="hidden tablet:block w-[280px] h-[80vh] overflow-y-auto flex-shrink-0"
       >
         <SidebarInner {...props} />
       </div>
@@ -325,13 +297,8 @@ export default function SidebarFilter({
 
       {/* Mobile slide-in panel */}
       <div
-        className="fixed top-0 bottom-0 z-[35] tablet:hidden transition-[right] duration-[400ms] overflow-y-auto"
-        style={{
-          right: mobileOpen ? 0 : "-100%",
-          width: "80%",
-          maxWidth: 320,
-          background: "white",
-        }}
+        className="fixed top-0 bottom-0 z-[35] tablet:hidden transition-[right] duration-[400ms] overflow-y-auto w-[80%] max-w-[320px] bg-white"
+        style={{ right: mobileOpen ? 0 : "-100%" }}
         role="dialog"
         aria-modal={mobileOpen ? true : undefined}
         aria-label="Filtros"
