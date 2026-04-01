@@ -1,91 +1,254 @@
-// Category Filter
-.category-filter
-  display flex
-  flex-wrap wrap
-  gap 8px
-  justify-content center
-  margin-bottom 40px
-
-  &__pill
-    padding 8px 20px
-    border-radius $border-radius-button
-    font-size 14px
-    font-weight 500
-    font-family $font-family
-    cursor pointer
-    transition all 0.2s
-    border none
-    background-color $color-light-bg
-    color $color-purple
-
-    &:hover
-      background-color rgba(112, 78, 253, 0.1)
-
-    &--active
-      background-color $color-purple
-      color $color-white
-
+// =============================================
 // Courses Section
+// =============================================
 .courses
   padding 40px 0
 
   @media (min-width: $breakpoint-tablet)
     padding 80px 0
 
-  &__title
-    font-size 24px
-    font-weight 600
-    color $color-text-primary
-    text-align center
-    margin-bottom 32px
+  &__container
+    max-width $max-width
+
+  // Mobile bar: filter toggle + sort
+  &__mobile-bar
+    display flex
+    align-items center
+    gap 12px
+    margin-bottom 16px
 
     @media (min-width: $breakpoint-tablet)
-      font-size 30px
+      display none
 
+  &__filter-toggle
+    display flex
+    align-items center
+    gap 8px
+    padding 8px 16px
+    border-radius $border-radius-button
+    font-size 14px
+    font-weight 500
+    border 1px solid rgba(0, 0, 0, 0.1)
+    color #13013f
+    background-color $color-white
+    cursor pointer
+    font-family $font-family
+
+  &__filter-icon
+    width 16px
+    height 16px
+
+  // Layout: sidebar + main
+  &__layout
+    display flex
+    gap 20px
+
+  // Desktop sidebar
+  &__sidebar
+    display none
+
+    @media (min-width: $breakpoint-tablet)
+      display block
+      width 280px
+      flex-shrink 0
+      height 80vh
+      overflow-y auto
+
+  // Mobile sidebar backdrop
+  &__sidebar-backdrop
+    display none
+    position fixed
+    top 0
+    left 0
+    right 0
+    bottom 0
+    background-color rgba(0, 0, 0, 0.4)
+    z-index 30
+
+    @media (min-width: $breakpoint-tablet)
+      display none !important
+
+  // Mobile sidebar panel
+  &__sidebar-mobile
+    position fixed
+    top 0
+    bottom 0
+    right -100%
+    width 80%
+    max-width 320px
+    background-color $color-white
+    z-index 35
+    overflow-y auto
+    transition right 0.4s
+
+    @media (min-width: $breakpoint-tablet)
+      display none !important
+
+    &--open
+      right 0
+
+  // Main content
+  &__main
+    flex 1
+    min-width 0
+
+  // Sort bar
+  &__sort
+    &--desktop
+      display none
+      margin-bottom 20px
+
+      @media (min-width: $breakpoint-tablet)
+        display block
+
+    &--mobile
+      flex 1
+
+  &__sort-bar
+    display flex
+    align-items center
+    justify-content space-between
+    border-radius $border-radius-button
+    padding 10px 20px
+    background-color $color-filter-bg
+    min-height 70px
+
+  &__sort-count
+    font-size 14px
+    color $color-text-secondary
+
+  &__sort-count-num
+    font-weight 600
+    color $color-text-primary
+
+  &__sort-control
+    display flex
+    align-items center
+    gap 12px
+
+  &__sort-label
+    font-size 10px
+    font-weight 600
+    color $color-text-primary
+    text-transform uppercase
+    letter-spacing 0.05em
+
+  &__sort-select
+    font-size 14px
+    color $color-text-primary
+    background transparent
+    border none
+    padding 0
+    cursor pointer
+    font-family $font-family
+    outline none
+
+  // Grid
   &__grid
     display grid
     grid-template-columns 1fr
-    gap 24px
-    justify-items center
+    gap 20px
 
-    @media (min-width: $breakpoint-tablet)
-      grid-template-columns repeat(2, 1fr)
+    @media (min-width: 600px)
+      grid-template-columns repeat(auto-fit, minmax(280px, 1fr))
 
-    @media (min-width: $breakpoint-desktop)
-      grid-template-columns repeat(3, 1fr)
+  &__grid-item
+    animation fadeIn 0.3s ease-in-out
 
   &__empty
     text-align center
     color $color-text-secondary
     margin-top 32px
 
+@keyframes fadeIn
+  from
+    opacity 0
+    transform translateY(10px)
+  to
+    opacity 1
+    transform translateY(0)
+
+// =============================================
 // Course Card
+// =============================================
 .course-card
   background-color $color-white
   border-radius $border-radius-card
   border 1px solid $color-border
   box-shadow $shadow-card
   max-width 350px
+  margin 0 auto
   width 100%
   display flex
   flex-direction column
   transition all 0.5s
+  min-height 330px
 
   &:hover
     box-shadow $shadow-card-hover
     transform translateY(-10px)
 
+  // Countdown timer bar
+  &__countdown
+    display flex
+    justify-content center
+    align-items center
+    padding 6px 4px
+    background-color #1f0a73
+    border-radius $border-radius-card $border-radius-card 0 0
+    flex-shrink 0
+
+  &__countdown-label
+    color $color-white
+    font-size 12px
+    line-height 16px
+    margin-right 20px
+
+  &__countdown-timer
+    color $color-white
+    font-weight 700
+    font-size 12px
+    line-height 16px
+
+  &__countdown-unit
+    font-size 10px
+    line-height 14px
+    font-weight 700
+
+  &__countdown-sep
+    margin 0 4px
+
+  // Image area
   &__image-wrapper
     position relative
     aspect-ratio 16 / 9
     overflow hidden
-    border-radius $border-radius-card $border-radius-card 0 0
+    flex-shrink 0
 
   &__image
     width 100%
     height 100%
     object-fit cover
 
+  // Rating badge (bottom-left)
+  &__rating
+    position absolute
+    bottom 0
+    left 0
+    display flex
+    align-items center
+    background-color rgba(0, 0, 0, 0.62)
+    padding 10px
+    border-radius 0 5px 0 0
+    z-index 1
+
+  &__rating-value
+    color $color-white
+    font-size 16px
+    font-weight 700
+    margin-left 5px
+
+  // Modality badge (bottom-right)
   &__modality
     position absolute
     bottom 20px
@@ -95,13 +258,17 @@
     padding 2px 10px
     box-shadow 0 4px 4px 0 rgba(0, 0, 0, 0.39)
     display flex
+    flex-direction row-reverse
     align-items center
-    gap 6px
+    gap 3px
+    z-index 1
 
   &__modality-dot
-    width 8px
-    height 8px
+    width 7px
+    height 7px
     border-radius 50%
+    display inline-block
+    flex-shrink 0
 
     &--en-vivo
       background-color $color-modality-live
@@ -114,35 +281,53 @@
 
   &__modality-text
     font-size 12px
-    font-weight 500
-    color $color-text-primary
+    line-height 16px
 
-  &__rating
-    position absolute
-    bottom 20px
-    left 0
-    background-color rgba(0, 0, 0, 0.6)
-    color $color-white
-    border-radius 0 5px 5px 0
-    padding 2px 8px
+  // Tooltip
+  &__tooltip-group
+    position relative
     display flex
     align-items center
-    gap 4px
 
-  &__star
-    width 12px
-    height 12px
-    fill #ffd705
+  &__tooltip-trigger
+    display flex
+    align-items center
+    justify-content center
+    width 18px
+    height 18px
+    border-radius 50%
+    border 1px solid #704efd
+    padding 5px
+    cursor default
 
-  &__rating-value
+    span
+      color #704efd
+      font-size 9px
+      line-height 1
+
+  &__tooltip-box
+    display none
+    position absolute
+    top 50%
+    left -50%
+    transform translate(-50%, -50%)
+    background-color $color-white
+    padding 10px
+    border-radius 5px
+    border 0.5px solid rgba(0, 0, 0, 0.1)
+    color #1d1d1d
+    width 200px
+    z-index 3
+    box-shadow $shadow-card-hover
     font-size 12px
-    font-weight 600
+    line-height 16px
 
-  &__rating-count
-    font-size 12px
-    opacity 0.7
+  &__tooltip-group:hover &__tooltip-box
+    display block
 
+  // Card body
   &__body
+    position relative
     padding 25px 20px 20px
     display flex
     flex-direction column
@@ -151,15 +336,18 @@
     min-height 260px
 
   &__type-tag
+    position absolute
+    top 5px
+    left 20px
     display inline-block
-    background-color $color-deep-purple
+    background-color #1f0a73
     color $color-white
     font-size 10px
     font-weight 700
     text-transform uppercase
-    padding 2px 6px
+    padding 0 5px
     border-radius 5px
-    margin-bottom 8px
+    line-height 18px
 
   &__title
     font-size 13px
@@ -169,32 +357,59 @@
     min-height 52px
     margin-bottom 10px
 
-  &__instructor
-    font-size 12px
-    color $color-text-secondary
-    margin-bottom 4px
-
-  &__date
-    font-size 12px
-    color $color-text-secondary
-    margin-bottom 16px
-
-  &__prices
+  // Date + Status row
+  &__date-status
     display flex
     align-items center
-    gap 8px
-    margin-bottom 16px
+    justify-content space-between
     flex-wrap wrap
+    margin-bottom 20px
+
+  &__date
+    display flex
+    align-items center
+    gap 4px
+
+    span
+      font-size 12px
+      color rgba(0, 0, 0, 0.7)
+
+  &__status
+    display flex
+    align-items center
+    gap 4px
+
+    span
+      font-size 12px
+      color rgba(0, 0, 0, 0.7)
+
+  &__status-dot
+    width 5px
+    height 5px
+    border-radius 50%
+    background-color #1d1d1d
+    display inline-block
+    flex-shrink 0
+
+  // Prices
+  &__prices
+    margin-bottom 20px
+
+  &__price-row
+    display flex
+    align-items center
+    gap 5px
 
   &__price-current
     font-size 19px
-    line-height 22px
     font-weight 700
     color $color-text-primary
 
+  &__price-original-row
+    margin-top 5px
+
   &__price-original
     font-size 16px
-    line-height 22px
     color rgba(0, 0, 0, 0.7)
     text-decoration line-through
 
@@ -206,18 +421,228 @@
     padding 2px 10px
     border-radius 5px
 
+  // Buttons
+  &__buttons
+    display flex
+    align-items center
+    justify-content space-between
+    width 100%
+
   &__cta
     width 100%
     background-color $color-purple
     color $color-white
-    font-size 17px
+    font-size 14px
     font-weight 500
     font-family $font-family
-    padding 10px 32px
+    padding 10px
     border-radius $border-radius-button
     border 1px solid $color-purple
     cursor pointer
     transition all 0.2s
 
     &:hover
-      background-color $color-purple-dark
+      background-color $color-white
+      color $color-purple
+
+  &__cart-btn
+    flex-shrink 0
+    display flex
+    align-items center
+    justify-content center
+    min-width 60px
+    min-height 40px
+    background-color $color-purple
+    border 1px solid $color-purple
+    border-radius $border-radius-button
+    margin-left 10px
+    cursor pointer
+    transition all 0.2s
+
+    &:hover
+      background-color $color-cyan
+      border-color $color-cyan
+
+// =============================================
+// Sidebar Filter
+// =============================================
+.sidebar-filter
+  background-color $color-white
+  height 100%
+  border-right 1px solid rgba(0, 0, 0, 0.1)
+
+  &__header
+    display flex
+    align-items center
+    justify-content space-between
+    padding 12px 16px
+    border-bottom 1px solid rgba(0, 0, 0, 0.1)
+
+  &__title
+    font-weight 600
+    font-size 14px
+    color #13013f
+
+  &__clear-btn
+    font-size 14px
+    font-weight 500
+    font-family $font-family
+    background-color #f3f4ff
+    color #704efd
+    border none
+    border-radius $border-radius-button
+    padding 10px 30px
+    cursor pointer
+    transition all 0.2s
+
+    &:hover
+      background-color $color-purple
+      color $color-white
+
+  // Close button (mobile panel only)
+  &__close
+    display none
+    position absolute
+    top 12px
+    left 16px
+    background none
+    border none
+    font-size 28px
+    line-height 1
+    color $color-text-secondary
+    cursor pointer
+    padding 0 8px
+
+  &__sections
+    padding 0 16px
+
+  &__section
+    border-bottom 1px solid rgba(0, 0, 0, 0.1)
+
+  &__section-header
+    width 100%
+    display flex
+    align-items center
+    justify-content space-between
+    padding 15px 0
+    background none
+    border none
+    cursor pointer
+    font-family $font-family
+    text-align left
+
+    span
+      font-weight 600
+      font-size 14px
+      color #13013f
+
+  &__chevron
+    width 24px
+    height 24px
+    color $color-text-secondary
+    opacity 0.5
+    transition transform 0.2s
+    flex-shrink 0
+
+  &__section-header[aria-expanded="false"] .sidebar-filter__chevron
+    transform rotate(180deg)
+
+  &__section-body
+    padding-bottom 16px
+    overflow hidden
+
+  &__section-body[hidden]
+    display none
+
+  // Checkbox items
+  &__checkbox-item
+    display flex
+    align-items center
+    gap 12px
+    padding 6px 0
+    cursor pointer
+
+  &__checkbox-box
+    flex-shrink 0
+    display flex
+    align-items center
+    justify-content center
+    width 18px
+    height 18px
+    border 1px solid rgba(19, 1, 63, 0.3)
+    border-radius 3px
+    background-color $color-white
+    transition background 0.15s, border-color 0.15s
+
+  &__checkbox-input
+    position absolute
+    opacity 0
+    width 0
+    height 0
+
+  &__checkbox-input:checked + .sidebar-filter__checkbox-label
+    border-left 2px solid #704efd
+    padding-left 6px
+    color #704efd
+
+  &__checkbox-input:checked ~ .sidebar-filter__checkbox-label
+    border-left 2px solid #704efd
+    padding-left 6px
+    color #704efd
+
+  &__checkbox-item:has(.sidebar-filter__checkbox-input:checked) .sidebar-filter__checkbox-box
+    background-color $color-cyan
+    border-color $color-cyan
+
+  &__checkbox-item:has(.sidebar-filter__checkbox-input:checked) .sidebar-filter__checkbox-box::after
+    content ''
+    display block
+    width 6px
+    height 3px
+    border-left 2px solid $color-white
+    border-bottom 2px solid $color-white
+    transform rotate(-45deg)
+    margin-top -2px
+
+  &__checkbox-label
+    font-size 14px
+    color #1d1d1d
+    transition color 0.15s
+
+  // Price range
+  &__price-range
+    margin-top 4px
+
+  &__price-labels
+    display flex
+    justify-content space-between
+    font-size 12px
+    color $color-text-secondary
+    margin-bottom 12px
+
+  &__price-slider
+    margin-bottom 12px
+
+  &__price-slider-label
+    display block
+    font-size 12px
+    color $color-text-secondary
+    margin-bottom 4px
+
+  &__range-input
+    width 100%
+    accent-color $color-purple
+
+  &__price-hint
+    font-size 12px
+    color $color-text-secondary
+    text-align center
+    margin-top 8px
+
+// Sidebar mobile: overrides for the mobile panel context
+.courses__sidebar-mobile
+  .sidebar-filter__close
+    display block
+
+  .sidebar-filter__header
+    padding-left 50px
