@@ -1,1 +1,126 @@
-// Contact styles
+.contact
+  padding 40px 0
+  background-color $color-light-bg
+
+  @media (min-width: $breakpoint-tablet)
+    padding 80px 0
+
+  &__title
+    font-size 24px
+    font-weight 600
+    color $color-text-primary
+    text-align center
+    margin-bottom 32px
+
+    @media (min-width: $breakpoint-tablet)
+      font-size 30px
+
+  &__form
+    max-width 512px
+    margin 0 auto
+    background-color $color-white
+    border-radius $border-radius-card
+    padding 32px
+    box-shadow $shadow-card
+
+  &__field
+    margin-bottom 20px
+
+  &__label
+    display block
+    font-size 14px
+    font-weight 500
+    color $color-text-primary
+    margin-bottom 6px
+
+  &__input
+    width 100%
+    padding 12px 16px
+    border-radius $border-radius-button
+    border 1px solid $color-border
+    font-size 14px
+    font-family $font-family
+    color $color-text-primary
+    transition border-color 0.2s
+    outline none
+
+    &::placeholder
+      color rgba(91, 105, 135, 0.5)
+
+    &:focus
+      border-color $color-purple
+
+    &--textarea
+      resize none
+
+    &--error
+      border-color $color-error
+
+  &__error
+    color $color-error
+    font-size 12px
+    margin-top 4px
+    display none
+
+  &__submit
+    width 100%
+    background-color $color-purple
+    color $color-white
+    font-size 17px
+    font-weight 500
+    font-family $font-family
+    padding 12px 32px
+    border-radius $border-radius-button
+    border 1px solid $color-purple
+    cursor pointer
+    transition all 0.2s
+    margin-top 4px
+
+    &:hover
+      background-color $color-purple-dark
+
+  &__success
+    max-width 512px
+    margin 0 auto
+    background-color $color-white
+    border-radius $border-radius-card
+    padding 32px
+    box-shadow $shadow-card
+    text-align center
+
+  &__success-icon
+    width 64px
+    height 64px
+    border-radius 50%
+    background-color rgba(38, 153, 11, 0.1)
+    display flex
+    align-items center
+    justify-content center
+    margin 0 auto 16px
+    color $color-success
+
+  &__success-title
+    font-size 18px
+    font-weight 600
+    color $color-text-primary
+    margin-bottom 8px
+
+  &__success-text
+    font-size 14px
+    color $color-text-secondary
+
+  &__success-btn
+    margin-top 24px
+    background-color $color-purple
+    color $color-white
+    font-size 14px
+    font-weight 500
+    font-family $font-family
+    padding 8px 24px
+    border-radius $border-radius-button
+    border none
+    cursor pointer
+    transition all 0.2s
+
+    &:hover
+      background-color $color-purple-dark
