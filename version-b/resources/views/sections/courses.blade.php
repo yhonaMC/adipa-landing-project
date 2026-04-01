@@ -41,17 +41,46 @@
 
             {{-- Main content --}}
             <div class="courses__main">
+                {{-- BlackSale promotional banner --}}
+                <div class="courses__banner">
+                    <div class="courses__banner-stars">
+                        <span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <div class="courses__banner-content">
+                        <span class="courses__banner-logo">
+                            <span class="courses__banner-logo--dark">BLACK</span><span class="courses__banner-logo--red">SALE</span><span class="courses__banner-logo--white">.CL</span>
+                        </span>
+                        <div class="courses__banner-discount">
+                            <span class="courses__banner-number">35</span>
+                            <div class="courses__banner-percent">
+                                <span>%</span>
+                                <span>Hasta</span>
+                            </div>
+                            <span class="courses__banner-off">OFF</span>
+                        </div>
+                    </div>
+                </div>
+
                 {{-- Sort bar (desktop) --}}
                 <div class="courses__sort courses__sort--desktop">
-                    <div class="courses__sort-bar">
-                        <span class="courses__sort-count"><strong class="courses__sort-count-num">{{ count($courses) }}</strong> cursos encontrados</span>
-                        <div class="courses__sort-control">
-                            <label for="sort-select-desktop" class="courses__sort-label">ORDENAR POR</label>
-                            <select id="sort-select-desktop" class="courses__sort-select js-sort-select">
-                                <option value="todos">Todos</option>
-                                <option value="mayor-precio">Mayor Precio</option>
-                                <option value="menor-precio">Menor Precio</option>
-                            </select>
+                    <div class="courses__sort-bar courses__sort-bar--redesign">
+                        <h2 class="courses__sort-heading">Cursos que te permitirán potenciar tu carrera.</h2>
+                        <div class="courses__sort-dropdown" id="sort-dropdown-desktop">
+                            <span class="courses__sort-label">ORDENAR POR</span>
+                            <button type="button" class="courses__sort-trigger js-sort-trigger">
+                                <span class="courses__sort-trigger-text js-sort-trigger-text">Todos</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="courses__sort-chevron">
+                                    <polyline points="6 9 12 15 18 9"/>
+                                </svg>
+                            </button>
+                            <div class="courses__sort-menu js-sort-menu" style="display: none;">
+                                <button type="button" class="courses__sort-option js-sort-option" data-value="todos">Todos</button>
+                                <button type="button" class="courses__sort-option js-sort-option" data-value="mayor-precio">Mayor Precio</button>
+                                <button type="button" class="courses__sort-option js-sort-option" data-value="menor-precio">Menor Precio</button>
+                                <button type="button" class="courses__sort-option js-sort-option" data-value="mas-proximo">Más próximo</button>
+                                <button type="button" class="courses__sort-option js-sort-option" data-value="menos-proximo">Menos próximo</button>
+                            </div>
                         </div>
                     </div>
                 </div>

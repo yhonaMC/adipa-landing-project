@@ -91,8 +91,7 @@ export default function CourseGrid({
           <button
             type="button"
             onClick={() => setMobileFilterOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-[5px] text-sm font-medium border"
-            style={{ borderColor: "rgba(0,0,0,.1)", color: "#13013f" }}
+            className="flex items-center gap-2 px-4 py-2 rounded-[5px] text-sm font-medium border border-divider text-[#13013f]"
             aria-label="Abrir filtros"
           >
             <svg
@@ -116,7 +115,6 @@ export default function CourseGrid({
             <SortDropdown
               value={sortOption}
               onChange={setSortOption}
-              resultsCount={sortedCourses.length}
             />
           </div>
         </div>
@@ -133,25 +131,52 @@ export default function CourseGrid({
 
           {/* Main content */}
           <div className="flex-1 min-w-0">
+            {/* BlackSale promotional banner */}
+            <div className="relative overflow-hidden rounded-[10px] mb-6 flex items-center justify-center py-8 tablet:py-10" style={{ background: "linear-gradient(135deg, #0a1628 0%, #152244 50%, #0f1b3d 100%)" }}>
+              {/* Decorative stars */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <span className="absolute top-[10%] left-[5%] w-1 h-1 bg-white/40 rounded-full" />
+                <span className="absolute top-[20%] left-[15%] w-[3px] h-[3px] bg-white/25 rounded-full" />
+                <span className="absolute top-[15%] right-[10%] w-1 h-1 bg-white/35 rounded-full" />
+                <span className="absolute top-[60%] right-[20%] w-[2px] h-[2px] bg-white/30 rounded-full" />
+                <span className="absolute bottom-[20%] left-[25%] w-[3px] h-[3px] bg-white/20 rounded-full" />
+                <span className="absolute top-[40%] left-[40%] w-1 h-1 bg-white/15 rounded-full" />
+                <span className="absolute bottom-[30%] right-[35%] w-[2px] h-[2px] bg-white/25 rounded-full" />
+                <span className="absolute top-[70%] left-[60%] w-1 h-1 bg-white/20 rounded-full" />
+                <span className="absolute top-[25%] right-[40%] w-[3px] h-[3px] bg-white/15 rounded-full" />
+                <span className="absolute bottom-[15%] right-[5%] w-1 h-1 bg-white/30 rounded-full" />
+              </div>
+              {/* Banner content */}
+              <div className="flex items-center gap-4 tablet:gap-6 z-[1]">
+                <span className="text-white font-black text-[24px] tablet:text-[36px] tracking-tight">
+                  <span className="text-[#1a3a7a]">BLACK</span><span className="text-[#c62828]">SALE</span><span className="text-white">.CL</span>
+                </span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-white font-black text-[48px] tablet:text-[72px] leading-none">35</span>
+                  <div className="flex flex-col">
+                    <span className="text-white font-black text-[20px] tablet:text-[28px] leading-none">%</span>
+                    <span className="text-white font-medium text-[12px] tablet:text-[16px] leading-none">Hasta</span>
+                  </div>
+                  <span className="text-[#c62828] font-black text-[36px] tablet:text-[52px] leading-none">OFF</span>
+                </div>
+              </div>
+            </div>
+
             {/* Sort bar — desktop only */}
             <div className="hidden tablet:block mb-5">
               <SortDropdown
                 value={sortOption}
                 onChange={setSortOption}
-                resultsCount={sortedCourses.length}
               />
             </div>
 
             {/* Grid */}
             <div
-              className="grid gap-5"
-              style={{
-                gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              }}
+              className="grid gap-5 grid-cols-1 tablet:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]"
               role="list"
             >
               {sortedCourses.map((course) => (
-                <div key={course.id} className="animate-fade-in" role="listitem">
+                <div key={course.id} className="animate-fade-in h-full" role="listitem">
                   <CourseCard course={course} />
                 </div>
               ))}

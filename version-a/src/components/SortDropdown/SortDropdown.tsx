@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
 import type { SortOption } from "@/types";
 import type { SortDropdownProps } from "./SortDropdown.types";
 
@@ -5,48 +8,78 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
   { value: "todos", label: "Todos" },
   { value: "mayor-precio", label: "Mayor Precio" },
   { value: "menor-precio", label: "Menor Precio" },
-  { value: "mas-proximo", label: "Mas proximo" },
-  { value: "menos-proximo", label: "Menos proximo" },
+  { value: "mas-proximo", label: "Más próximo" },
+  { value: "menos-proximo", label: "Menos próximo" },
 ];
 
-export default function SortDropdown({ value, onChange, resultsCount }: SortDropdownProps) {
+export default function SortDropdown({ value, onChange }: SortDropdownProps) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const selectedLabel = SORT_OPTIONS.find((o) => o.value === value)?.label ?? "Todos";
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <div
-      className="flex items-center justify-between rounded-[5px] px-5 py-[10px]"
-      style={{ background: "#f0f3fd", minHeight: 70 }}
-    >
-      {/* Left: results count */}
-      <span className="text-sm text-adipa-text-secondary">
-        {resultsCount !== undefined ? (
-          <>
-            <span className="font-semibold text-adipa-text-primary">{resultsCount}</span>{" "}
-            {resultsCount === 1 ? "curso encontrado" : "cursos encontrados"}
-          </>
-        ) : null}
-      </span>
+    <div className="flex items-center justify-between py-4">
+      {/* Left: motivational text */}
+      <h2 className="text-adipa-purple font-bold text-[18px] tablet:text-[20px] leading-tight">
+        Cursos que te permitirán potenciar tu carrera.
+      </h2>
 
       {/* Right: sort control */}
-      <div className="flex items-center gap-3">
-        <label
-          htmlFor="sort-select"
-          className="font-semibold"
-          style={{ fontSize: 10, color: "#1d1d1d", textTransform: "uppercase", letterSpacing: "0.05em" }}
-        >
+      <div className="relative flex-shrink-0 ml-4" ref={ref}>
+        <span className="block text-[10px] font-semibold text-adipa-text-secondary uppercase tracking-[0.05em] text-right mb-1">
           Ordenar por
-        </label>
-        <select
-          id="sort-select"
-          value={value}
-          onChange={(e) => onChange(e.target.value as SortOption)}
-          className="text-sm text-adipa-text-primary focus:outline-none cursor-pointer"
-          style={{ background: "transparent", padding: 0 }}
+        </span>
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className="flex items-center gap-2 cursor-pointer bg-transparent border-0 p-0"
         >
-          {SORT_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
+          <span className="text-[14px] font-medium text-adipa-text-primary">{selectedLabel}</span>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={`transition-transform duration-200 text-adipa-text-primary ${open ? "rotate-180" : ""}`}
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+
+        {open && (
+          <div className="absolute right-0 top-full mt-1 bg-white rounded-[8px] shadow-dropdown border border-adipa-border py-2 min-w-[180px] z-20">
+            {SORT_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => {
+                  onChange(opt.value);
+                  setOpen(false);
+                }}
+                className={`block w-full text-left px-4 py-2 text-[14px] transition-colors duration-150 hover:bg-adipa-light-bg ${
+                  opt.value === value ? "text-adipa-purple font-medium" : "text-adipa-text-primary"
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

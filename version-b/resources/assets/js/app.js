@@ -17,6 +17,18 @@ $(document).ready(function () {
     $(".header__hamburger").attr("aria-expanded", "false");
   });
 
+  // Blinking cursor for hero search
+  var $heroInput = $('#hero-search-input');
+  var $heroCursor = $('#hero-search-cursor');
+  $heroInput.on('focus', function() {
+    $heroCursor.hide();
+  });
+  $heroInput.on('blur', function() {
+    if (!$heroInput.val()) {
+      $heroCursor.show();
+    }
+  });
+
   // =============================================
   // Search input filtering
   // =============================================
@@ -143,6 +155,36 @@ $(document).ready(function () {
     filterAndSort();
   });
 
+  // Custom sort dropdown
+  $(document).on('click', '.js-sort-trigger', function() {
+    var $menu = $(this).siblings('.js-sort-menu');
+    var $chevron = $(this).find('.courses__sort-chevron');
+    $menu.toggle();
+    $chevron.toggleClass('courses__sort-chevron--open');
+  });
+
+  $(document).on('click', '.js-sort-option', function() {
+    var val = $(this).data('value');
+    var label = $(this).text();
+    var $dropdown = $(this).closest('.courses__sort-dropdown');
+    $dropdown.find('.js-sort-trigger-text').text(label);
+    $dropdown.find('.js-sort-menu').hide();
+    $dropdown.find('.courses__sort-chevron').removeClass('courses__sort-chevron--open');
+    // Mark active
+    $dropdown.find('.js-sort-option').removeClass('courses__sort-option--active');
+    $(this).addClass('courses__sort-option--active');
+    // Trigger existing sort logic
+    $('.js-sort-select').val(val).trigger('change');
+  });
+
+  // Close dropdown when clicking outside
+  $(document).on('click', function(e) {
+    if (!$(e.target).closest('.courses__sort-dropdown').length) {
+      $('.js-sort-menu').hide();
+      $('.courses__sort-chevron').removeClass('courses__sort-chevron--open');
+    }
+  });
+
   // =============================================
   // Sidebar checkbox filtering
   // =============================================
@@ -267,4 +309,5 @@ $(document).ready(function () {
     $(".contact__form").fadeIn(300);
     $(".contact__form")[0].reset();
   });
+
 });
