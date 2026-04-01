@@ -1,6 +1,6 @@
 import type { Course, Category } from "@/types";
 import { Modality } from "@/types";
-import coursesJson from "../../../shared/data/courses.json";
+import coursesJson from "./courses.json";
 
 export const categories: Category[] = coursesJson.categories;
 
