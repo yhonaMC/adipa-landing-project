@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: adipa-landing-laravel
+    runtime: docker
+    dockerfilePath: version-b/Dockerfile
+    dockerContext: version-b
+    branch: main
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: PORT
+        value: "8000"
