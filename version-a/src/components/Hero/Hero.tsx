@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { HeroProps } from "./Hero.types";
 
 const suggestionChips = [
@@ -25,59 +26,37 @@ export default function Hero({
     onSearch(e.target.value);
   }
 
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
     <div className={`pt-[70px] tablet:pt-[130px] ${className}`}>
-      {/* Solid purple hero section */}
-      <div
-        className="w-full flex flex-col items-center justify-center px-5 py-10 tablet:py-14"
-        style={{ backgroundColor: "#704EFD" }}
-      >
-        {/* Title */}
-        <h1
-          className="text-white text-center mb-3"
-          style={{
-            fontWeight: 700,
-            fontStyle: "italic",
-            fontSize: "clamp(24px, 4vw, 36px)",
-            lineHeight: 1.2,
-          }}
-        >
+      <div className="w-full flex flex-col items-center justify-center py-[36px] px-5 tablet:py-12 tablet:px-10 bg-adipa-purple">
+        <h1 className="text-white text-center mb-3 font-bold italic text-[28px] tablet:text-[36px] leading-[1.25]">
           Cursos de Psicologia con hasta 35% OFF
         </h1>
 
-        {/* Subtitle */}
-        <p
-          className="text-white text-center mb-6"
-          style={{
-            fontWeight: 400,
-            fontSize: "clamp(14px, 2vw, 16px)",
-            maxWidth: "600px",
-            opacity: 0.95,
-          }}
-        >
+        <p className="text-white text-center mb-6 font-normal text-[15px] tablet:text-[17px] max-w-[600px] leading-[1.5] opacity-95">
           Accede a descuentos especiales de Black Sale y eleva tu carrera profesional.
         </p>
 
-        {/* Search Input */}
-        <div className="relative w-full mb-4" style={{ maxWidth: "60%" }}>
+        <div className="relative w-full mb-5 max-w-[540px]">
           <input
             type="text"
             value={searchValue}
             onChange={handleInputChange}
             placeholder="Buscar cursos..."
-            className="w-full text-sm text-adipa-text-primary placeholder-adipa-text-secondary rounded-[5px] px-4 py-3 pr-12 outline-none focus-visible:outline-none"
-            style={{
-              border: "1px solid #d0d0d0",
-              borderRadius: "5px",
-              backgroundColor: "#fff",
-            }}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            className="w-full text-sm text-white rounded-none outline-none focus-visible:outline-none border-0 border-b-2 border-b-white bg-transparent py-3 pl-0 pr-12 text-[14px] placeholder:text-white/60"
           />
-          {/* Magnifier icon */}
-          <span className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-adipa-text-secondary">
+          {!isFocused && !searchValue && (
+            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] h-[20px] bg-white animate-blink-cursor" />
+          )}
+          <span className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
+              width="24"
+              height="24"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -92,25 +71,14 @@ export default function Hero({
           </span>
         </div>
 
-        {/* Suggestion Chips */}
-        <div className="flex flex-wrap items-center gap-2 justify-center" style={{ maxWidth: "60%" }}>
+        <div className="flex flex-wrap items-center gap-2 justify-center max-w-[60%]">
           <span className="text-white text-sm font-medium mr-1">Buscar:</span>
           {suggestionChips.map((chip) => (
             <button
               key={chip}
               type="button"
               onClick={() => handleChipClick(chip)}
-              className="transition-transform duration-150 hover:-translate-y-0.5 cursor-pointer"
-              style={{
-                backgroundColor: "rgba(255,255,255,0.15)",
-                padding: "5px 12px",
-                fontSize: "12px",
-                color: "#fff",
-                fontWeight: 500,
-                borderRadius: "20px",
-                border: "1px solid rgba(255,255,255,0.5)",
-                lineHeight: "1.4",
-              }}
+              className="transition-transform duration-150 hover:-translate-y-0.5 cursor-pointer bg-white/20 px-3 py-[5px] text-xs text-white font-semibold rounded-[20px] border border-white/70 leading-[1.4]"
             >
               {chip}
             </button>
