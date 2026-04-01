@@ -1,1 +1,130 @@
-// Header styles
+.header
+  position fixed
+  top 0
+  left 0
+  width 100%
+  background-color $color-white
+  box-shadow $shadow-header
+  z-index 20
+
+  &__container
+    display flex
+    align-items center
+    justify-content space-between
+    height 70px
+
+    @media (min-width: $breakpoint-desktop)
+      height 130px
+
+  &__logo
+    text-decoration none
+
+  &__logo-text
+    font-size 24px
+    font-weight 700
+
+  &__logo-adi
+    color $color-brand-purple
+
+  &__logo-pa
+    color $color-brand-blue
+
+  &__nav
+    display none
+
+    @media (min-width: $breakpoint-tablet)
+      display flex
+      align-items center
+      gap 32px
+
+  &__nav-link
+    color $color-text-primary
+    text-decoration none
+    font-size 14px
+    font-weight 500
+    transition color 0.2s
+
+    &:hover
+      color $color-purple
+
+  &__actions
+    display none
+
+    @media (min-width: $breakpoint-tablet)
+      display flex
+      align-items center
+      gap 12px
+
+  &__btn
+    font-family $font-family
+    font-size 14px
+    font-weight 500
+    padding 8px 20px
+    border-radius $border-radius-button
+    cursor pointer
+    transition all 0.2s
+
+    &--outline
+      background-color transparent
+      color $color-purple
+      border 1px solid $color-purple
+
+      &:hover
+        background-color $color-light-bg
+
+    &--primary
+      background-color $color-purple
+      color $color-white
+      border 1px solid $color-purple
+
+      &:hover
+        background-color $color-purple-dark
+
+  &__hamburger
+    display flex
+    flex-direction column
+    justify-content center
+    align-items center
+    width 32px
+    height 32px
+    gap 6px
+    background none
+    border none
+    cursor pointer
+
+    @media (min-width: $breakpoint-tablet)
+      display none
+
+  &__hamburger-line
+    display block
+    width 24px
+    height 2px
+    background-color $color-text-primary
+    transition all 0.3s
+
+  &__mobile-nav
+    background-color $color-white
+    border-top 1px solid $color-border
+    padding 16px 20px
+
+    @media (min-width: $breakpoint-tablet)
+      display none !important
+
+  &__mobile-link
+    display block
+    padding 12px 0
+    color $color-text-primary
+    text-decoration none
+    font-size 14px
+    font-weight 500
+
+    &:hover
+      color $color-purple
+
+  &__mobile-actions
+    display flex
+    flex-direction column
+    gap 8px
+    margin-top 16px
+    padding-top 16px
+    border-top 1px solid $color-border
