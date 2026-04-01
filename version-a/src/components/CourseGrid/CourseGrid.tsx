@@ -1,17 +1,83 @@
 "use client";
 
 import { useState } from "react";
-import { courses, categories } from "@/data/courses";
+import { courses } from "@/data/courses";
+import { Modality } from "@/types";
 import CourseCard from "@/components/CourseCard/CourseCard";
-import CategoryFilter from "@/components/CategoryFilter/CategoryFilter";
+import SidebarFilter from "@/components/SidebarFilter/SidebarFilter";
+import SortDropdown from "@/components/SortDropdown/SortDropdown";
+import type { FilterState } from "@/components/SidebarFilter/SidebarFilter.types";
+import type { SortOption } from "@/types";
 import type { CourseGridProps } from "./CourseGrid.types";
 
-export default function CourseGrid({ className = "" }: CourseGridProps) {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+const DEFAULT_FILTERS: FilterState = {
+  categories: [],
+  modalities: [],
+  priceRange: [0, 600000],
+};
 
-  const filteredCourses = activeCategory
-    ? courses.filter((course) => course.category === activeCategory)
-    : courses;
+function parseDate(dateStr: string): Date {
+  // Format: "DD/MM/YYYY"
+  const [day, month, year] = dateStr.split("/").map(Number);
+  return new Date(year, month - 1, day);
+}
+
+export default function CourseGrid({
+  searchValue = "",
+  className = "",
+}: CourseGridProps) {
+  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
+  const [sortOption, setSortOption] = useState<SortOption>("todos");
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+
+  // --- Filter ---
+  const filteredCourses = courses.filter((course) => {
+    if (
+      filters.categories.length > 0 &&
+      !filters.categories.includes(course.category)
+    ) {
+      return false;
+    }
+
+    if (
+      filters.modalities.length > 0 &&
+      !filters.modalities.includes(course.modality as Modality)
+    ) {
+      return false;
+    }
+
+    if (
+      course.discountPrice < filters.priceRange[0] ||
+      course.discountPrice > filters.priceRange[1]
+    ) {
+      return false;
+    }
+
+    if (searchValue.trim()) {
+      const q = searchValue.trim().toLowerCase();
+      const inTitle = course.title.toLowerCase().includes(q);
+      const inCategory = (course.category ?? "").toLowerCase().includes(q);
+      if (!inTitle && !inCategory) return false;
+    }
+
+    return true;
+  });
+
+  // --- Sort ---
+  const sortedCourses = [...filteredCourses].sort((a, b) => {
+    switch (sortOption) {
+      case "mayor-precio":
+        return b.discountPrice - a.discountPrice;
+      case "menor-precio":
+        return a.discountPrice - b.discountPrice;
+      case "mas-proximo":
+        return parseDate(a.startDate).getTime() - parseDate(b.startDate).getTime();
+      case "menos-proximo":
+        return parseDate(b.startDate).getTime() - parseDate(a.startDate).getTime();
+      default:
+        return 0;
+    }
+  });
 
   return (
     <section
@@ -19,33 +85,85 @@ export default function CourseGrid({ className = "" }: CourseGridProps) {
       className={`py-10 tablet:py-20 ${className}`}
       aria-label="Catalogo de cursos"
     >
-      <div className="max-w-container mx-auto px-5 tablet:px-10">
-        <h2 className="text-2xl tablet:text-3xl font-semibold text-adipa-text-primary text-center mb-8">
-          Nuestros Cursos
-        </h2>
-
-        <CategoryFilter
-          categories={categories}
-          activeCategory={activeCategory}
-          onCategoryChange={setActiveCategory}
-        />
-
-        <div
-          className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-6 justify-items-center"
-          role="tabpanel"
-        >
-          {filteredCourses.map((course) => (
-            <div key={course.id} className="animate-fade-in">
-              <CourseCard course={course} />
-            </div>
-          ))}
+      <div className="max-w-container mx-auto px-5">
+        {/* Mobile toolbar: filter toggle + sort */}
+        <div className="flex items-center gap-3 tablet:hidden mb-4">
+          <button
+            type="button"
+            onClick={() => setMobileFilterOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 rounded-[5px] text-sm font-medium border"
+            style={{ borderColor: "rgba(0,0,0,.1)", color: "#13013f" }}
+            aria-label="Abrir filtros"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-4 h-4"
+              aria-hidden="true"
+            >
+              <line x1="4" y1="6" x2="20" y2="6" />
+              <line x1="8" y1="12" x2="20" y2="12" />
+              <line x1="12" y1="18" x2="20" y2="18" />
+            </svg>
+            Filtros
+          </button>
+          <div className="flex-1">
+            <SortDropdown
+              value={sortOption}
+              onChange={setSortOption}
+              resultsCount={sortedCourses.length}
+            />
+          </div>
         </div>
 
-        {filteredCourses.length === 0 && (
-          <p className="text-center text-adipa-text-secondary mt-8">
-            No se encontraron cursos en esta categoria.
-          </p>
-        )}
+        <div className="flex gap-5">
+          {/* Sidebar (desktop: static; mobile: slide-in panel) */}
+          <SidebarFilter
+            filters={filters}
+            onFiltersChange={setFilters}
+            onClearFilters={() => setFilters(DEFAULT_FILTERS)}
+            mobileOpen={mobileFilterOpen}
+            onMobileClose={() => setMobileFilterOpen(false)}
+          />
+
+          {/* Main content */}
+          <div className="flex-1 min-w-0">
+            {/* Sort bar — desktop only */}
+            <div className="hidden tablet:block mb-5">
+              <SortDropdown
+                value={sortOption}
+                onChange={setSortOption}
+                resultsCount={sortedCourses.length}
+              />
+            </div>
+
+            {/* Grid */}
+            <div
+              className="grid gap-5"
+              style={{
+                gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              }}
+              role="list"
+            >
+              {sortedCourses.map((course) => (
+                <div key={course.id} className="animate-fade-in" role="listitem">
+                  <CourseCard course={course} />
+                </div>
+              ))}
+            </div>
+
+            {sortedCourses.length === 0 && (
+              <p className="text-center text-adipa-text-secondary mt-8">
+                No se encontraron cursos para tu busqueda.
+              </p>
+            )}
+          </div>
+        </div>
       </div>
     </section>
   );
