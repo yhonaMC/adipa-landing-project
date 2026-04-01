@@ -69,6 +69,7 @@ resources/
 │   │   └── footer.blade.php  # Footer
 │   ├── partials/
 │   │   ├── course-card.blade.php     # Card de curso
+│   │   ├── sidebar-filter.blade.php  # Sidebar con filtros
 │   │   └── category-filter.blade.php # Pills de filtro
 │   └── home.blade.php        # Vista principal
 └── assets/

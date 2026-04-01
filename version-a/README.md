@@ -4,7 +4,7 @@ Landing page de catalogo de cursos de ADIPA construida con Next.js, Tailwind CSS
 
 ## Tech Stack
 
-- **Framework:** Next.js 14+ (App Router)
+- **Framework:** Next.js 16 (App Router)
 - **Estilos:** Tailwind CSS
 - **Lenguaje:** TypeScript (strict mode)
 - **Testing:** Jest + React Testing Library
@@ -51,7 +51,8 @@ src/
 │   ├── Hero/              # Hero section con CTA
 │   ├── CourseGrid/        # Grilla de cursos con filtrado
 │   ├── CourseCard/        # Card individual de curso
-│   ├── CategoryFilter/    # Pills de filtrado por categoria
+│   ├── SidebarFilter/     # Sidebar con filtros (categoria, modalidad, precio)
+│   ├── SortDropdown/      # Dropdown de ordenamiento custom
 │   ├── ContactForm/       # Formulario con validacion client-side
 │   └── Footer/            # Footer con links y redes sociales
 ├── data/                   # Datos tipados (importa del shared/)
