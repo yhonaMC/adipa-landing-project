@@ -116,7 +116,7 @@ export default function Header({ className = "" }: HeaderProps) {
 
           {/* Search Bar — desktop only */}
           <div className="hidden tablet:flex flex-1 max-w-[520px] mx-4">
-            <div className="flex w-full rounded-[5px] border border-[#d0c6fd] overflow-hidden bg-white">
+            <div className="flex w-full rounded-[5px] overflow-hidden bg-white" style={{ border: "2px solid #2CB7FF" }}>
               <input
                 type="text"
                 placeholder="¿Que quieres aprender?"
@@ -126,7 +126,8 @@ export default function Header({ className = "" }: HeaderProps) {
               />
               <button
                 type="button"
-                className="flex-shrink-0 bg-adipa-purple hover:bg-adipa-purple-dark transition-colors duration-200 text-white px-4 flex items-center justify-center"
+                className="flex-shrink-0 transition-colors duration-200 text-white px-4 flex items-center justify-center"
+                style={{ backgroundColor: "#2CB7FF" }}
                 aria-label="Buscar"
               >
                 <SearchIcon />
@@ -150,7 +151,8 @@ export default function Header({ className = "" }: HeaderProps) {
             </a>
             <button
               type="button"
-              className="text-adipa-text-secondary hover:text-adipa-purple transition-colors duration-200"
+              className="hover:opacity-80 transition-colors duration-200"
+              style={{ color: "#704EFD" }}
               aria-label="Carrito de compras"
             >
               <CartIcon />

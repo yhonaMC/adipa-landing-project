@@ -178,34 +178,34 @@ function SidebarInner({ filters, onFiltersChange, onClearFilters, onClose }: Sid
             &times;
           </button>
         ) : (
-          <span className="font-semibold text-[14px]" style={{ color: "#13013f" }}>
+          <span style={{ fontWeight: 400, fontSize: "18px", color: "#1d1d1d" }}>
             Filtros
           </span>
         )}
         <button
           type="button"
           onClick={onClearFilters}
-          className="text-sm font-medium transition-colors duration-200 rounded-[5px] px-[30px] py-[10px]"
+          className="text-sm font-medium transition-colors duration-200"
           style={{
-            background: hasActiveFilters ? "#704efd" : "#f3f4ff",
-            color: hasActiveFilters ? "white" : "#704efd",
+            background: "#704efd",
+            color: "white",
+            borderRadius: "20px",
+            padding: "8px 20px",
+            fontSize: "14px",
           }}
           onMouseEnter={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = "#704efd";
-            (e.currentTarget as HTMLButtonElement).style.color = "white";
+            (e.currentTarget as HTMLButtonElement).style.background = "#5a3ad8";
           }}
           onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = hasActiveFilters
-              ? "#704efd"
-              : "#f3f4ff";
-            (e.currentTarget as HTMLButtonElement).style.color = hasActiveFilters
-              ? "white"
-              : "#704efd";
+            (e.currentTarget as HTMLButtonElement).style.background = "#704efd";
           }}
         >
           Borrar filtros
         </button>
       </div>
+
+      {/* Divider line below header */}
+      <div style={{ borderBottom: "1px solid rgba(0,0,0,0.1)" }} />
 
       {/* Filter sections */}
       <div className="px-4">
