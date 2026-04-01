@@ -1,0 +1,39 @@
+@import '_variables'
+@import '_header'
+@import '_hero'
+@import '_courses'
+@import '_contact'
+@import '_footer'
+
+// Base
+*
+  margin 0
+  padding 0
+  box-sizing border-box
+
+html
+  scroll-behavior smooth
+
+body
+  font-family $font-family
+  color $color-text-primary
+  line-height 1.5
+
+img
+  max-width 100%
+  height auto
+
+// Container
+.container
+  max-width $max-width
+  margin 0 auto
+  padding 0 20px
+
+  @media (min-width: $breakpoint-tablet)
+    padding 0 40px
+
+// Focus-visible for keyboard navigation
+*:focus-visible
+  outline 2px solid $color-purple
+  outline-offset 2px
+  border-radius 2px
