@@ -163,7 +163,7 @@ export default function ContactForm({ className = "" }: ContactFormProps) {
               )}
             </div>
 
-            <div className="mb-6">
+            <div className="mb-5">
               <label
                 htmlFor="message"
                 className="block text-sm font-medium text-adipa-text-primary mb-1.5"
@@ -190,7 +190,7 @@ export default function ContactForm({ className = "" }: ContactFormProps) {
 
             <button
               type="submit"
-              className="w-full bg-adipa-purple text-white text-[17px] font-medium py-3 px-8 rounded-[5px] border border-adipa-purple hover:bg-adipa-purple-dark transition-colors duration-200"
+              className="mt-1 w-full bg-adipa-purple text-white text-[17px] font-medium py-3 px-8 rounded-[5px] border border-adipa-purple hover:bg-adipa-purple-dark transition-colors duration-200"
             >
               Enviar mensaje
             </button>

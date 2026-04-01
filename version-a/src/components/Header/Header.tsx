@@ -106,17 +106,17 @@ export default function Header({ className = "" }: HeaderProps) {
             aria-label="ADIPA Home"
           >
             <span className="text-[38px] font-bold leading-none tracking-tight select-none">
-              <span style={{ color: "#7D61F1" }}>A</span>
-              <span style={{ color: "#72CAF7" }}>D</span>
-              <span style={{ color: "#7D61F1" }}>I</span>
-              <span style={{ color: "#72CAF7" }}>P</span>
-              <span style={{ color: "#7D61F1" }}>A</span>
+              <span className="text-adipa-brand-purple">A</span>
+              <span className="text-adipa-brand-blue">D</span>
+              <span className="text-adipa-brand-purple">I</span>
+              <span className="text-adipa-brand-blue">P</span>
+              <span className="text-adipa-brand-purple">A</span>
             </span>
           </a>
 
           {/* Search Bar — desktop only */}
           <div className="hidden tablet:flex flex-1 max-w-[520px] mx-4">
-            <div className="flex w-full rounded-[5px] overflow-hidden bg-white" style={{ border: "2px solid #2CB7FF" }}>
+            <div className="flex w-full rounded-[5px] overflow-hidden bg-white border-2 border-adipa-cyan">
               <input
                 type="text"
                 placeholder="¿Que quieres aprender?"
@@ -126,8 +126,7 @@ export default function Header({ className = "" }: HeaderProps) {
               />
               <button
                 type="button"
-                className="flex-shrink-0 transition-colors duration-200 text-white px-4 flex items-center justify-center"
-                style={{ backgroundColor: "#2CB7FF" }}
+                className="flex-shrink-0 transition-colors duration-200 text-white px-4 flex items-center justify-center bg-adipa-cyan"
                 aria-label="Buscar"
               >
                 <SearchIcon />
@@ -151,8 +150,7 @@ export default function Header({ className = "" }: HeaderProps) {
             </a>
             <button
               type="button"
-              className="hover:opacity-80 transition-colors duration-200"
-              style={{ color: "#704EFD" }}
+              className="hover:opacity-80 transition-colors duration-200 text-adipa-purple"
               aria-label="Carrito de compras"
             >
               <CartIcon />

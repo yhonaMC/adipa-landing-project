@@ -49,7 +49,7 @@ export default function Footer({ className = "" }: FooterProps) {
               <span className="text-adipa-brand-purple">ADI</span>
               <span className="text-adipa-brand-blue">PA</span>
             </span>
-            <p className="text-sm text-white/70 leading-relaxed">
+            <p className="text-sm text-white/70 leading-[1.6]">
               Mejorando la Salud Mental del Mundo. Plataforma de educacion
               continua especializada en psicologia y salud mental.
             </p>

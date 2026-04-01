@@ -56,6 +56,12 @@ body {
   .animate-fade-in {
     animation: fadeIn 0.3s ease-in-out;
   }
+  .text-muted {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .border-divider {
+    border-color: rgba(0, 0, 0, 0.1);
+  }
 }
 
 @keyframes fadeIn {
@@ -75,3 +81,34 @@ body {
   outline-offset: 2px;
   border-radius: 2px;
 }
+
+/* Pulse animation for modality dot */
+@keyframes pulseDot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.6;
+  }
+}
+
+.animate-pulse-dot {
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+/* Blinking cursor animation for search input */
+@keyframes blinkCursor {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-blink-cursor {
+  animation: blinkCursor 1s step-end infinite;
+}
+
