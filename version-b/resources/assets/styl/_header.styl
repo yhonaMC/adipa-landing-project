@@ -53,7 +53,7 @@
     display flex
     width 100%
     border-radius $border-radius-button
-    border 1px solid #d0c6fd
+    border 2px solid #2CB7FF
     overflow hidden
     background-color $color-white
 
@@ -72,7 +72,7 @@
 
   &__search-btn
     flex-shrink 0
-    background-color $color-purple
+    background-color #2CB7FF
     color $color-white
     border none
     padding 0 16px
@@ -83,7 +83,7 @@
     transition background-color 0.2s
 
     &:hover
-      background-color $color-purple-dark
+      background-color darken(#2CB7FF, 10%)
 
   // Right actions (desktop)
   &__actions
@@ -138,14 +138,14 @@
   &__cart-btn
     background none
     border none
-    color $color-text-secondary
+    color #704EFD
     cursor pointer
     transition color 0.2s
     display flex
     align-items center
 
     &:hover
-      color $color-purple
+      color $color-purple-dark
 
   // Hamburger (mobile only)
   &__hamburger

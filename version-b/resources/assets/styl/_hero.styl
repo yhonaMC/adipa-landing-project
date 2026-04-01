@@ -5,115 +5,59 @@
   @media (min-width: $breakpoint-tablet)
     padding-top 130px
 
-// Promotional banner
-.hero-banner
-  width 100%
-  position relative
-  overflow hidden
-  display flex
-  align-items center
-  justify-content center
-  height 150px
-  background linear-gradient(135deg, #704EFD 0%, #7D61F1 40%, #2CB7FF 100%)
+// Search section — solid purple background
+.hero-search
+  background-color #704EFD
+  padding 36px 20px
 
-  &__blur
-    position absolute
-    border-radius 50%
-    opacity 0.2
-    background rgba(255, 255, 255, 0.3)
+  @media (min-width: $breakpoint-tablet)
+    padding 48px 40px
 
-    &--left
-      left -40px
-      top 50%
-      transform translateY(-50%)
-      width 160px
-      height 160px
-      filter blur(30px)
-
-    &--right
-      right -40px
-      top 50%
-      transform translateY(-50%)
-      width 208px
-      height 208px
-      filter blur(40px)
-
-  &__content
-    position relative
-    z-index 1
+  &__container
+    max-width $max-width
     text-align center
-    padding 0 20px
 
-  &__subtitle
-    color rgba(255, 255, 255, 0.9)
-    font-size 14px
-    font-weight 500
-    text-transform uppercase
-    letter-spacing 0.1em
-    margin-bottom 4px
-
-    @media (min-width: $breakpoint-tablet)
-      font-size 16px
-
-  &__title
+  &__heading
+    font-size 28px
+    line-height 1.25
     color $color-white
     font-weight 700
-    font-size 30px
-    line-height 1.1
-    text-shadow 0 2px 8px rgba(0, 0, 0, 0.15)
+    font-style italic
+    margin-bottom 12px
 
     @media (min-width: $breakpoint-tablet)
       font-size 36px
 
-    @media (min-width: $breakpoint-desktop)
-      font-size 48px
-
-// Search section
-.hero-search
-  background-color $color-white
-  padding 24px 20px
-
-  @media (min-width: $breakpoint-tablet)
-    padding 32px 40px
-
-  &__container
-    max-width $max-width
-
-  &__heading
-    font-size 20px
-    line-height 1.4
-    color #1d1d1d
-    font-weight 400
-    margin-bottom 20px
+  &__subheading
+    font-size 15px
+    line-height 1.5
+    color rgba(255, 255, 255, 0.9)
+    margin-bottom 24px
 
     @media (min-width: $breakpoint-tablet)
-      font-size 24px
-
-    @media (min-width: $breakpoint-desktop)
-      font-size 26px
+      font-size 17px
 
   &__input-wrapper
     position relative
-    width 100%
-    margin-bottom 16px
+    width 60%
+    margin 0 auto 20px
+
+    @media (max-width: 600px)
+      width 90%
 
   &__input
     width 100%
     background-color $color-white
     font-size 14px
     color $color-text-primary
-    border 1px solid #d0c6fd
+    border none
     border-radius $border-radius-button
-    padding 12px 16px
-    padding-right 48px
+    padding 12px 48px 12px 16px
     outline none
     font-family $font-family
 
     &::placeholder
       color $color-text-secondary
-
-    &:focus
-      border-color $color-purple
 
   &__icon
     position absolute
@@ -121,26 +65,39 @@
     top 50%
     transform translateY(-50%)
     pointer-events none
-    color $color-purple
+    color $color-text-secondary
+
+  &__chips-row
+    display flex
+    align-items center
+    justify-content center
+    flex-wrap wrap
+    gap 10px
+
+  &__chips-label
+    color $color-white
+    font-size 14px
+    font-weight 600
+    white-space nowrap
 
   &__chips
     display flex
     flex-wrap wrap
     gap 8px
+    justify-content center
 
   &__chip
-    background-color $color-white
-    padding 5px 10px
+    background-color rgba(255, 255, 255, 0.2)
+    padding 5px 12px
     font-size 12px
-    color #704efd
+    color $color-white
     font-weight 600
-    box-shadow 0 0 4px 0 rgba(0, 0, 0, 0.078)
+    border 1px solid rgba(255, 255, 255, 0.7)
     border-radius $border-radius-button
-    border none
-    line-height 1.4
     cursor pointer
     font-family $font-family
-    transition transform 0.15s
+    transition transform 0.15s, background-color 0.15s
 
     &:hover
+      background-color rgba(255, 255, 255, 0.35)
       transform translateY(-2px)
