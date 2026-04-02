@@ -6,3 +6,9 @@ Thumbs.db
 *.log
 dist/
 .next/
+
+# Claude
+CLAUDE.md
+AGENTS.md
+.claude/
+docs/superpowers/
