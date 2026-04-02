@@ -7,4 +7,6 @@ export interface NavItem {
 
 export interface HeaderProps {
   className?: string;
+  onSearch?: (value: string) => void;
+  searchValue?: string;
 }

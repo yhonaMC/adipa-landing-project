@@ -65,7 +65,7 @@ function ChevronDownIcon() {
   );
 }
 
-export default function Header({ className = "" }: HeaderProps) {
+export default function Header({ className = "", onSearch, searchValue = "" }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -99,12 +99,19 @@ export default function Header({ className = "" }: HeaderProps) {
                 placeholder="¿Que quieres aprender?"
                 className="flex-1 px-4 py-2.5 text-sm text-adipa-text-primary placeholder:text-adipa-text-secondary/70 bg-transparent outline-none"
                 aria-label="Buscar cursos"
-                readOnly
+                value={searchValue}
+                onChange={(e) => {
+                  onSearch?.(e.target.value);
+                  document.getElementById("cursos")?.scrollIntoView({ behavior: "smooth" });
+                }}
               />
               <button
                 type="button"
                 className="flex-shrink-0 transition-colors duration-200 text-white px-4 flex items-center justify-center bg-adipa-cyan"
                 aria-label="Buscar"
+                onClick={() => {
+                  document.getElementById("cursos")?.scrollIntoView({ behavior: "smooth" });
+                }}
               >
                 <SearchIcon />
               </button>

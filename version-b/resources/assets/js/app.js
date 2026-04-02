@@ -135,6 +135,13 @@ $(document).ready(function () {
     filterAndSort();
   });
 
+  // ========== Header Search ==========
+  $('#header-search-input').on('input', function() {
+    var val = $(this).val();
+    $('#hero-search-input').val(val).trigger('input');
+    document.getElementById('cursos').scrollIntoView({ behavior: 'smooth' });
+  });
+
   // Suggestion chip click
   $(".hero-search__chip").on("click", function () {
     var chipText = $(this).data("chip");

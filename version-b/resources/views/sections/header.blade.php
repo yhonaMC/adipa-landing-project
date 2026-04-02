@@ -12,7 +12,7 @@
             {{-- Search Bar (desktop only) --}}
             <div class="header__search">
                 <div class="header__search-wrapper">
-                    <input type="text" placeholder="¿Que quieres aprender?" class="header__search-input" aria-label="Buscar cursos" readonly>
+                    <input type="text" id="header-search-input" placeholder="¿Que quieres aprender?" class="header__search-input" aria-label="Buscar cursos">
                     <button type="button" class="header__search-btn" aria-label="Buscar">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <circle cx="11" cy="11" r="8"/>
