@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["php83", "php83Extensions.tokenizer", "php83Extensions.mbstring", "php83Extensions.openssl", "php83Extensions.dom", "php83Extensions.xml", "php83Extensions.xmlwriter", "nodejs_20"]
+
+[phases.install]
+cmds = ["composer install --no-dev --optimize-autoloader", "npm ci"]
+
+[phases.build]
+cmds = ["npx gulp", "cp .env.example .env", "php artisan key:generate"]
+
+[start]
+cmd = "php artisan serve --host=0.0.0.0 --port=${PORT:-8000}"
