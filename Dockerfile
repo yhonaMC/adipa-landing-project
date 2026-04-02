@@ -10,16 +10,14 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
-# Copy composer files and install PHP dependencies
-COPY composer.json composer.lock ./
+# Copy only version-b
+COPY version-b/ .
+
+# Install PHP dependencies
 RUN composer install --no-dev --no-scripts --no-autoloader
 
-# Copy package files and install Node dependencies
-COPY package.json package-lock.json ./
+# Install Node dependencies
 RUN npm ci
-
-# Copy application code
-COPY . .
 
 # Finish composer autoload
 RUN composer dump-autoload --optimize
