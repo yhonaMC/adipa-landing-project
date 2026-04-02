@@ -1,8 +1,22 @@
 <div class="sidebar-filter">
+    {{-- Quick nav section --}}
+    <div class="sidebar-filter__quick-nav">
+        <button type="button" class="sidebar-filter__quick-nav-item js-quick-nav" data-nav="top-10">Top 10 semanal</button>
+        <button type="button" class="sidebar-filter__quick-nav-item js-quick-nav" data-nav="populares">Más Populares</button>
+        <button type="button" class="sidebar-filter__quick-nav-item js-quick-nav" data-nav="valorados">Mejores Valorados</button>
+        <button type="button" class="sidebar-filter__quick-nav-item js-quick-nav" data-nav="nuevos">Nuevos Lanzamientos</button>
+        <button type="button" class="sidebar-filter__quick-nav-item js-quick-nav" data-nav="ofertas">Ofertas Flash ⚡</button>
+        <button type="button" class="sidebar-filter__quick-nav-item js-quick-nav" data-nav="pre-lanzamiento">Pre Lanzamiento ⏰</button>
+    </div>
+
     {{-- Header row --}}
     <div class="sidebar-filter__header">
         <span class="sidebar-filter__title">Filtros</span>
         <button type="button" class="sidebar-filter__clear-btn">Borrar filtros</button>
+    </div>
+
+    {{-- Active filter tags --}}
+    <div class="sidebar-filter__active-tags js-active-tags" style="display: none;">
     </div>
 
     {{-- Mobile close button (only shown inside mobile panel) --}}

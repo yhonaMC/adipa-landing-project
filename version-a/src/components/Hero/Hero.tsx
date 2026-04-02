@@ -30,7 +30,7 @@ export default function Hero({
 
   return (
     <div className={`pt-[70px] tablet:pt-[130px] ${className}`}>
-      <div className="w-full flex flex-col items-center justify-center py-[36px] px-5 tablet:py-12 tablet:px-10 bg-adipa-purple">
+      <div className="w-full flex flex-col items-center justify-center py-[52px] px-5 tablet:py-[64px] tablet:px-10 bg-adipa-purple">
         <h1 className="text-white text-center mb-3 font-bold italic text-[28px] tablet:text-[36px] leading-[1.25]">
           Cursos de Psicologia con hasta 35% OFF
         </h1>

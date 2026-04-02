@@ -748,6 +748,71 @@
     padding 12px 16px
     border-bottom 2px solid rgba(0, 0, 0, 0.12)
 
+  // Quick nav
+  &__quick-nav
+    padding 12px 16px
+    border-bottom 1px solid rgba(0, 0, 0, 0.1)
+
+  &__quick-nav-item
+    display block
+    width 100%
+    text-align left
+    padding 10px 16px
+    font-size 14px
+    font-weight 500
+    font-family $font-family
+    color $color-text-primary
+    background none
+    border none
+    border-left 3px solid transparent
+    cursor pointer
+    transition color 0.2s
+
+    &:hover
+      color $color-purple
+
+    &--active
+      color $color-purple
+      border-left-color $color-purple
+      padding-left 12px
+
+  // Active filter tags
+  &__active-tags
+    padding 12px 16px
+    display flex
+    flex-wrap wrap
+    gap 8px
+
+  &__active-tag
+    display inline-flex
+    align-items center
+    gap 4px
+    padding 6px 12px
+    font-size 12px
+    color $color-text-primary
+    border 1px solid $color-border
+    border-radius 5px
+    background-color $color-white
+    font-family $font-family
+
+  &__active-tag-remove
+    display flex
+    align-items center
+    background none
+    border none
+    padding 0
+    margin-left 4px
+    cursor pointer
+    color $color-text-secondary
+    transition color 0.2s
+
+    &:hover
+      color $color-purple
+
+    svg
+      width 12px
+      height 12px
+
   &__title
     font-weight 400
     font-size 14px
@@ -809,6 +874,10 @@
       font-weight 600
       font-size 14px
       color #13013f
+      transition color 0.2s
+
+    &:hover span
+      color $color-purple
 
   &__chevron
     width 24px

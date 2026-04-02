@@ -51,11 +51,11 @@ function FilterSection({
     <div className="border-b border-divider">
       <button
         type="button"
-        className="w-full text-left py-[15px] flex items-center justify-between"
+        className="w-full text-left py-[15px] flex items-center justify-between group/section"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
       >
-        <span className="font-semibold text-[14px] text-[#13013f]">
+        <span className="font-semibold text-[14px] text-[#13013f] transition-colors duration-200 group-hover/section:text-adipa-purple">
           {title}
         </span>
         <ChevronIcon open={open} />
@@ -117,7 +117,18 @@ interface SidebarInnerProps extends SidebarFilterProps {
   onClose?: () => void;
 }
 
+const QUICK_NAV_OPTIONS = [
+  { id: "top-10", label: "Top 10 semanal" },
+  { id: "populares", label: "Más Populares" },
+  { id: "valorados", label: "Mejores Valorados" },
+  { id: "nuevos", label: "Nuevos Lanzamientos" },
+  { id: "ofertas", label: "Ofertas Flash ⚡" },
+  { id: "pre-lanzamiento", label: "Pre Lanzamiento ⏰" },
+];
+
 function SidebarInner({ filters, onFiltersChange, onClearFilters, onClose }: SidebarInnerProps) {
+  const [activeNav, setActiveNav] = useState<string | null>(null);
+
   function toggleCategory(id: string, checked: boolean) {
     const next = checked
       ? [...filters.categories, id]
@@ -132,6 +143,14 @@ function SidebarInner({ filters, onFiltersChange, onClearFilters, onClose }: Sid
     onFiltersChange({ ...filters, modalities: next });
   }
 
+  function removeCategory(id: string) {
+    onFiltersChange({ ...filters, categories: filters.categories.filter((c) => c !== id) });
+  }
+
+  function removeModality(id: Modality) {
+    onFiltersChange({ ...filters, modalities: filters.modalities.filter((m) => m !== id) });
+  }
+
   function handlePriceMin(val: number) {
     const clamped = Math.min(val, filters.priceRange[1]);
     onFiltersChange({ ...filters, priceRange: [clamped, filters.priceRange[1]] });
@@ -142,18 +161,39 @@ function SidebarInner({ filters, onFiltersChange, onClearFilters, onClose }: Sid
     onFiltersChange({ ...filters, priceRange: [filters.priceRange[0], clamped] });
   }
 
-  const hasActiveFilters =
-    filters.categories.length > 0 ||
-    filters.modalities.length > 0 ||
-    filters.priceRange[0] > 0 ||
-    filters.priceRange[1] < MAX_PRICE;
+  // Build active filter tags
+  const activeTags: { key: string; label: string; onRemove: () => void }[] = [];
+  filters.categories.forEach((catId) => {
+    const opt = AREA_TEMATICA_OPTIONS.find((o) => o.id === catId);
+    if (opt) activeTags.push({ key: `cat-${catId}`, label: opt.label, onRemove: () => removeCategory(catId) });
+  });
+  filters.modalities.forEach((modId) => {
+    const opt = MODALITY_OPTIONS.find((o) => o.id === modId);
+    if (opt) activeTags.push({ key: `mod-${modId}`, label: opt.label, onRemove: () => removeModality(modId) });
+  });
 
   return (
     <div className="bg-white h-full border-r border-divider">
-      {/* Header row */}
-      <div
-        className="flex items-center justify-between px-4 py-3 border-b-2 border-b-black/[0.12]"
-      >
+      {/* Quick nav section */}
+      <div className="px-4 py-3 border-b border-divider">
+        {QUICK_NAV_OPTIONS.map((opt) => (
+          <button
+            key={opt.id}
+            type="button"
+            onClick={() => setActiveNav(activeNav === opt.id ? null : opt.id)}
+            className={`block w-full text-left py-[10px] text-[14px] font-medium transition-colors duration-200 ${
+              activeNav === opt.id
+                ? "text-adipa-purple border-l-[3px] border-l-adipa-purple pl-3"
+                : "text-adipa-text-primary hover:text-adipa-purple pl-4"
+            }`}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Filters header row */}
+      <div className="flex items-center justify-between px-4 py-3 border-b-2 border-b-black/[0.12]">
         {onClose ? (
           <button
             type="button"
@@ -177,8 +217,30 @@ function SidebarInner({ filters, onFiltersChange, onClearFilters, onClose }: Sid
         </button>
       </div>
 
-      {/* Divider line below header */}
-      <div className="border-b border-divider" />
+      {/* Active filter tags */}
+      {activeTags.length > 0 && (
+        <div className="px-4 py-3 flex flex-wrap gap-2 border-b border-divider">
+          {activeTags.map((tag) => (
+            <span
+              key={tag.key}
+              className="inline-flex items-center gap-1 px-3 py-[6px] text-xs text-adipa-text-primary border border-adipa-border rounded-[5px] bg-white"
+            >
+              {tag.label}
+              <button
+                type="button"
+                onClick={tag.onRemove}
+                className="ml-1 text-adipa-text-secondary hover:text-adipa-purple transition-colors"
+                aria-label={`Quitar filtro ${tag.label}`}
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* Filter sections */}
       <div className="px-4">

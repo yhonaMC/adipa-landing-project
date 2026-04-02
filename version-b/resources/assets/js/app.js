@@ -260,6 +260,57 @@ $(document).ready(function () {
   });
 
   // =============================================
+  // Quick nav toggle
+  // =============================================
+  $(document).on('click', '.js-quick-nav', function() {
+    var $this = $(this);
+    var isActive = $this.hasClass('sidebar-filter__quick-nav-item--active');
+    $('.js-quick-nav').removeClass('sidebar-filter__quick-nav-item--active');
+    if (!isActive) {
+      $this.addClass('sidebar-filter__quick-nav-item--active');
+    }
+  });
+
+  // =============================================
+  // Active filter tags - update on checkbox change
+  // =============================================
+  function updateActiveTags() {
+    var tags = [];
+    var seen = {};
+    $('.sidebar-filter__checkbox-input:checked').each(function() {
+      var $input = $(this);
+      var filterType = $input.data('filter');
+      var value = $input.val();
+      var key = filterType + ':' + value;
+      if (seen[key]) return;
+      seen[key] = true;
+      var label = $input.siblings('.sidebar-filter__checkbox-label').text();
+      tags.push('<span class="sidebar-filter__active-tag">' + label +
+        '<button type="button" class="sidebar-filter__active-tag-remove js-remove-tag" data-filter="' + filterType + '" data-value="' + value + '">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+        '</button></span>');
+    });
+    var $allContainers = $('.js-active-tags');
+    if (tags.length > 0) {
+      $allContainers.html(tags.join('')).show();
+    } else {
+      $allContainers.hide();
+    }
+  }
+
+  $(document).on('change', '.sidebar-filter__checkbox-input', function() {
+    updateActiveTags();
+  });
+
+  // Remove tag by clicking X
+  $(document).on('click', '.js-remove-tag', function() {
+    var filterType = $(this).data('filter');
+    var value = $(this).data('value');
+    var $checkbox = $('.sidebar-filter__checkbox-input[data-filter="' + filterType + '"][value="' + value + '"]');
+    $checkbox.prop('checked', false).trigger('change');
+  });
+
+  // =============================================
   // Contact form validation (keep existing)
   // =============================================
   $(".contact__form").on("submit", function (e) {
