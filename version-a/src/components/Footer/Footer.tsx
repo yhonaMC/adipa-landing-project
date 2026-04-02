@@ -1,25 +1,5 @@
-import type { FooterProps, FooterLink, SocialLink } from "./Footer.types";
-
-const navLinks: FooterLink[] = [
-  { label: "Cursos", href: "#cursos" },
-  { label: "Diplomados", href: "#diplomados" },
-  { label: "Recursos", href: "#recursos" },
-  { label: "Contacto", href: "#contacto" },
-];
-
-const programLinks: FooterLink[] = [
-  { label: "Psicologia Clinica", href: "#" },
-  { label: "Neurociencias", href: "#" },
-  { label: "Psicologia Infantil", href: "#" },
-  { label: "Terapia de Pareja", href: "#" },
-];
-
-const socialLinks: SocialLink[] = [
-  { label: "Facebook", href: "#", icon: "facebook" },
-  { label: "Instagram", href: "#", icon: "instagram" },
-  { label: "YouTube", href: "#", icon: "youtube" },
-  { label: "LinkedIn", href: "#", icon: "linkedin" },
-];
+import { FOOTER_NAV_LINKS, FOOTER_PROGRAM_LINKS, FOOTER_SOCIAL_LINKS } from "@/data/constants";
+import type { FooterProps, SocialLink } from "./Footer.types";
 
 function SocialIcon({ icon }: { icon: SocialLink["icon"] }) {
   const paths: Record<SocialLink["icon"], string> = {
@@ -58,7 +38,7 @@ export default function Footer({ className = "" }: FooterProps) {
           <div>
             <h4 className="text-[13px] uppercase font-normal mb-4">Navegacion</h4>
             <ul className="space-y-2">
-              {navLinks.map((link) => (
+              {FOOTER_NAV_LINKS.map((link) => (
                 <li key={link.href}>
                   <a href={link.href} className="text-[13px] uppercase font-normal text-white/80 hover:text-white transition-colors duration-200 flex items-center gap-2">
                     <span className="w-[5px] h-[5px] rounded-full bg-adipa-purple inline-block" />
@@ -72,7 +52,7 @@ export default function Footer({ className = "" }: FooterProps) {
           <div>
             <h4 className="text-[13px] uppercase font-normal mb-4">Programas</h4>
             <ul className="space-y-2">
-              {programLinks.map((link) => (
+              {FOOTER_PROGRAM_LINKS.map((link) => (
                 <li key={link.label}>
                   <a href={link.href} className="text-[13px] uppercase font-normal text-white/80 hover:text-white transition-colors duration-200 flex items-center gap-2">
                     <span className="w-[5px] h-[5px] rounded-full bg-adipa-purple inline-block" />
@@ -86,7 +66,7 @@ export default function Footer({ className = "" }: FooterProps) {
           <div>
             <h4 className="text-[13px] uppercase font-normal mb-4">Siguenos</h4>
             <div className="flex gap-3">
-              {socialLinks.map((link) => (
+              {FOOTER_SOCIAL_LINKS.map((link) => (
                 <a
                   key={link.icon}
                   href={link.href}

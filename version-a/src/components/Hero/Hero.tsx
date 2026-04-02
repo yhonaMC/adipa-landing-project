@@ -1,17 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { SUGGESTION_CHIPS } from "@/data/constants";
 import type { HeroProps } from "./Hero.types";
-
-const suggestionChips = [
-  "Autismo",
-  "Wisc",
-  "Ados",
-  "Trauma",
-  "ADI-R",
-  "WAIS",
-  "Peers",
-];
 
 export default function Hero({
   onSearch,
@@ -73,7 +64,7 @@ export default function Hero({
 
         <div className="flex flex-wrap items-center gap-2 justify-center max-w-[60%]">
           <span className="text-white text-sm font-medium mr-1">Buscar:</span>
-          {suggestionChips.map((chip) => (
+          {SUGGESTION_CHIPS.map((chip) => (
             <button
               key={chip}
               type="button"

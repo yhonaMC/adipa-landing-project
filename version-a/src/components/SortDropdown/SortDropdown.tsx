@@ -1,32 +1,25 @@
-"use client";
+'use client'
 
-import { useState, useRef, useEffect } from "react";
-import type { SortOption } from "@/types";
-import type { SortDropdownProps } from "./SortDropdown.types";
-
-const SORT_OPTIONS: { value: SortOption; label: string }[] = [
-  { value: "todos", label: "Todos" },
-  { value: "mayor-precio", label: "Mayor Precio" },
-  { value: "menor-precio", label: "Menor Precio" },
-  { value: "mas-proximo", label: "Más próximo" },
-  { value: "menos-proximo", label: "Menos próximo" },
-];
+import { useState, useRef, useEffect } from 'react'
+import { SORT_OPTIONS } from '@/data/constants'
+import type { SortDropdownProps } from './SortDropdown.types'
 
 export default function SortDropdown({ value, onChange }: SortDropdownProps) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
 
-  const selectedLabel = SORT_OPTIONS.find((o) => o.value === value)?.label ?? "Todos";
+  const selectedLabel =
+    SORT_OPTIONS.find((o) => o.value === value)?.label ?? 'Todos'
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
+        setOpen(false)
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   return (
     <div className="flex items-center justify-between py-4">
@@ -45,7 +38,9 @@ export default function SortDropdown({ value, onChange }: SortDropdownProps) {
           onClick={() => setOpen((v) => !v)}
           className="flex items-center gap-2 cursor-pointer bg-transparent border-0 p-0"
         >
-          <span className="text-[14px] font-medium text-adipa-text-primary">{selectedLabel}</span>
+          <span className="text-[14px] font-medium text-adipa-text-primary">
+            {selectedLabel}
+          </span>
           <svg
             width="16"
             height="16"
@@ -55,7 +50,7 @@ export default function SortDropdown({ value, onChange }: SortDropdownProps) {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className={`transition-transform duration-200 text-adipa-text-primary ${open ? "rotate-180" : ""}`}
+            className={`transition-transform duration-200 text-adipa-text-primary ${open ? 'rotate-180' : ''}`}
           >
             <polyline points="6 9 12 15 18 9" />
           </svg>
@@ -68,11 +63,13 @@ export default function SortDropdown({ value, onChange }: SortDropdownProps) {
                 key={opt.value}
                 type="button"
                 onClick={() => {
-                  onChange(opt.value);
-                  setOpen(false);
+                  onChange(opt.value)
+                  setOpen(false)
                 }}
                 className={`block w-full text-left px-4 py-2 text-[14px] transition-colors duration-150 hover:bg-adipa-light-bg ${
-                  opt.value === value ? "text-adipa-purple font-medium" : "text-adipa-text-primary"
+                  opt.value === value
+                    ? 'text-adipa-purple font-medium'
+                    : 'text-adipa-text-primary'
                 }`}
               >
                 {opt.label}
@@ -82,5 +79,5 @@ export default function SortDropdown({ value, onChange }: SortDropdownProps) {
         )}
       </div>
     </div>
-  );
+  )
 }

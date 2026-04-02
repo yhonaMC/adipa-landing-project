@@ -1,31 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import type { HeaderProps, NavItem } from "./Header.types";
-
-const primaryNavItems: NavItem[] = [
-  { label: "Descubre ADIPA", href: "#descubre", hasDropdown: true },
-  { label: "Recursos", href: "#recursos", hasDropdown: true },
-  { label: "Seminarios", href: "#seminarios" },
-  { label: "Congreso", href: "#congreso" },
-  { label: "Especializaciones", href: "#especializaciones" },
-  { label: "Acreditaciones", href: "#acreditaciones" },
-  { label: "Sesiones Magistrales", href: "#sesiones-magistrales" },
-  { label: "Diplomados", href: "#diplomados" },
-  { label: "Cursos", href: "#cursos", isCurrent: true },
-];
-
-const mobileNavItems: NavItem[] = [
-  { label: "Descubre ADIPA", href: "#descubre", hasDropdown: true },
-  { label: "Recursos", href: "#recursos", hasDropdown: true },
-  { label: "Seminarios", href: "#seminarios" },
-  { label: "Congreso", href: "#congreso" },
-  { label: "Especializaciones", href: "#especializaciones" },
-  { label: "Acreditaciones", href: "#acreditaciones" },
-  { label: "Sesiones Magistrales", href: "#sesiones-magistrales" },
-  { label: "Diplomados", href: "#diplomados" },
-  { label: "Cursos", href: "#cursos", isCurrent: true },
-];
+import { NAV_ITEMS } from "@/data/constants";
+import type { HeaderProps } from "./Header.types";
 
 function SearchIcon() {
   return (
@@ -190,7 +167,7 @@ export default function Header({ className = "" }: HeaderProps) {
         aria-label="Navegacion secundaria"
       >
         <div className="max-w-[1400px] mx-auto px-5 w-full flex items-center gap-0 overflow-x-auto">
-          {primaryNavItems.map((item) => (
+          {NAV_ITEMS.map((item) => (
             <a
               key={item.href}
               href={item.href}
@@ -222,7 +199,7 @@ export default function Header({ className = "" }: HeaderProps) {
           className="px-5 py-4"
           aria-label="Navegacion movil"
         >
-          {mobileNavItems.map((item) => (
+          {NAV_ITEMS.map((item) => (
             <a
               key={item.href}
               href={item.href}

@@ -2,22 +2,8 @@
 
 import { useState } from "react";
 import { Modality } from "@/types";
+import { AREA_TEMATICA_OPTIONS, MODALITY_OPTIONS, MAX_PRICE, QUICK_NAV_OPTIONS } from "@/data/constants";
 import type { SidebarFilterProps } from "./SidebarFilter.types";
-
-const AREA_TEMATICA_OPTIONS = [
-  { id: "psicologia-clinica", label: "Psicologia Clinica y Salud Mental" },
-  { id: "neurociencias", label: "Neurociencias" },
-  { id: "psicologia-infantil", label: "Psicologia Infantil" },
-  { id: "terapia-de-pareja", label: "Terapia de Pareja" },
-];
-
-const MODALITY_OPTIONS = [
-  { id: Modality.EnVivo, label: "En Vivo" },
-  { id: Modality.Online, label: "Online" },
-  { id: Modality.Presencial, label: "Presencial" },
-];
-
-const MAX_PRICE = 600000;
 
 function ChevronIcon({ open }: { open: boolean }) {
   return (
@@ -117,17 +103,7 @@ interface SidebarInnerProps extends SidebarFilterProps {
   onClose?: () => void;
 }
 
-const QUICK_NAV_OPTIONS = [
-  { id: "top-10", label: "Top 10 semanal" },
-  { id: "populares", label: "Más Populares" },
-  { id: "valorados", label: "Mejores Valorados" },
-  { id: "nuevos", label: "Nuevos Lanzamientos" },
-  { id: "ofertas", label: "Ofertas Flash ⚡" },
-  { id: "pre-lanzamiento", label: "Pre Lanzamiento ⏰" },
-];
-
 function SidebarInner({ filters, onFiltersChange, onClearFilters, onClose }: SidebarInnerProps) {
-  const [activeNav, setActiveNav] = useState<string | null>(null);
 
   function toggleCategory(id: string, checked: boolean) {
     const next = checked
@@ -180,9 +156,9 @@ function SidebarInner({ filters, onFiltersChange, onClearFilters, onClose }: Sid
           <button
             key={opt.id}
             type="button"
-            onClick={() => setActiveNav(activeNav === opt.id ? null : opt.id)}
+            onClick={() => onFiltersChange({ ...filters, quickNav: filters.quickNav === opt.id ? null : opt.id })}
             className={`block w-full text-left py-[10px] text-[14px] font-medium transition-colors duration-200 ${
-              activeNav === opt.id
+              filters.quickNav === opt.id
                 ? "text-adipa-purple border-l-[3px] border-l-adipa-purple pl-3"
                 : "text-adipa-text-primary hover:text-adipa-purple pl-4"
             }`}
