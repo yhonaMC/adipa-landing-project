@@ -4,6 +4,7 @@ export interface FilterState {
   categories: string[];
   modalities: Modality[];
   priceRange: [number, number];
+  quickNav: string | null;
 }
 
 export interface SidebarFilterProps {

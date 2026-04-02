@@ -14,6 +14,7 @@ const DEFAULT_FILTERS: FilterState = {
   categories: [],
   modalities: [],
   priceRange: [0, 600000],
+  quickNav: null,
 };
 
 function parseDate(dateStr: string): Date {
@@ -63,8 +64,24 @@ export default function CourseGrid({
     return true;
   });
 
+  // --- Quick Nav ---
+  let quickNavCourses = [...filteredCourses];
+  if (filters.quickNav === "top-10") {
+    quickNavCourses = quickNavCourses.sort((a, b) => b.rating - a.rating).slice(0, 10);
+  } else if (filters.quickNav === "populares") {
+    quickNavCourses = quickNavCourses.sort((a, b) => b.reviewCount - a.reviewCount);
+  } else if (filters.quickNav === "valorados") {
+    quickNavCourses = quickNavCourses.sort((a, b) => b.rating - a.rating);
+  } else if (filters.quickNav === "nuevos") {
+    quickNavCourses = quickNavCourses.sort((a, b) => parseDate(b.startDate).getTime() - parseDate(a.startDate).getTime());
+  } else if (filters.quickNav === "ofertas") {
+    quickNavCourses = quickNavCourses.filter((c) => c.discountPrice < c.originalPrice);
+  } else if (filters.quickNav === "pre-lanzamiento") {
+    quickNavCourses = quickNavCourses.filter((c) => c.status === "Proximo a iniciar");
+  }
+
   // --- Sort ---
-  const sortedCourses = [...filteredCourses].sort((a, b) => {
+  const sortedCourses = [...quickNavCourses].sort((a, b) => {
     switch (sortOption) {
       case "mayor-precio":
         return b.discountPrice - a.discountPrice;

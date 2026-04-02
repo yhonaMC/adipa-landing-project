@@ -1,7 +1,5 @@
 $(document).ready(function () {
-  // =============================================
-  // Header hamburger toggle
-  // =============================================
+  // ========== Mobile Menu ==========
   $(".header__hamburger").on("click", function () {
     var $mobileMenu = $(".header__mobile-menu");
     var isOpen = !$mobileMenu.prop("hidden");
@@ -17,7 +15,7 @@ $(document).ready(function () {
     $(".header__hamburger").attr("aria-expanded", "false");
   });
 
-  // Blinking cursor for hero search
+  // ========== Hero Search Cursor ==========
   var $heroInput = $('#hero-search-input');
   var $heroCursor = $('#hero-search-cursor');
   $heroInput.on('focus', function() {
@@ -29,9 +27,7 @@ $(document).ready(function () {
     }
   });
 
-  // =============================================
-  // Search input filtering
-  // =============================================
+  // ========== Course Filtering ==========
   function filterAndSort() {
     var searchVal = $("#hero-search-input").val().trim().toLowerCase();
 
@@ -109,9 +105,7 @@ $(document).ready(function () {
     sortCourses();
   }
 
-  // =============================================
-  // Sort dropdown
-  // =============================================
+  // ========== Sort Functionality ==========
   function sortCourses() {
     var sortVal = $(".js-sort-select").first().val();
     var $grid = $(".courses__grid");
@@ -155,7 +149,7 @@ $(document).ready(function () {
     filterAndSort();
   });
 
-  // Custom sort dropdown
+  // ========== Custom Sort Dropdown ==========
   $(document).on('click', '.js-sort-trigger', function() {
     var $menu = $(this).siblings('.js-sort-menu');
     var $chevron = $(this).find('.courses__sort-chevron');
@@ -185,9 +179,7 @@ $(document).ready(function () {
     }
   });
 
-  // =============================================
-  // Sidebar checkbox filtering
-  // =============================================
+  // Sidebar checkbox filtering (handler merged with Active Filter Tags section below)
   $(document).on("change", ".sidebar-filter__checkbox-input", function () {
     // Sync checkboxes between desktop and mobile sidebars
     var filterType = $(this).data("filter");
@@ -197,6 +189,7 @@ $(document).ready(function () {
     $(".sidebar-filter__checkbox-input[data-filter='" + filterType + "'][value='" + filterVal + "']").prop("checked", isChecked);
 
     filterAndSort();
+    updateActiveTags();
   });
 
   // Price range inputs
@@ -219,9 +212,7 @@ $(document).ready(function () {
     filterAndSort();
   });
 
-  // =============================================
   // Collapsible filter sections
-  // =============================================
   $(document).on("click", ".sidebar-filter__section-header", function () {
     var $header = $(this);
     var $body = $header.next(".sidebar-filter__section-body");
@@ -236,9 +227,7 @@ $(document).ready(function () {
     }
   });
 
-  // =============================================
   // Sidebar mobile open/close with backdrop
-  // =============================================
   $(".courses__filter-toggle").on("click", function () {
     $(".courses__sidebar-mobile").addClass("courses__sidebar-mobile--open");
     $(".courses__sidebar-backdrop").css("display", "block");
@@ -259,21 +248,104 @@ $(document).ready(function () {
     closeMobileSidebar();
   });
 
-  // =============================================
-  // Quick nav toggle
-  // =============================================
+  // ========== Quick Nav ==========
   $(document).on('click', '.js-quick-nav', function() {
     var $this = $(this);
     var isActive = $this.hasClass('sidebar-filter__quick-nav-item--active');
     $('.js-quick-nav').removeClass('sidebar-filter__quick-nav-item--active');
+
     if (!isActive) {
       $this.addClass('sidebar-filter__quick-nav-item--active');
     }
+
+    var navId = isActive ? null : $this.data('nav');
+    applyQuickNav(navId);
   });
 
-  // =============================================
-  // Active filter tags - update on checkbox change
-  // =============================================
+  function applyQuickNav(navId) {
+    var $cards = $('.courses__grid-item');
+
+    // First show all cards
+    $cards.show();
+
+    if (!navId) {
+      // Re-apply existing filters
+      filterAndSort();
+      return;
+    }
+
+    // Get visible cards as array for sorting
+    var cardsArray = $cards.toArray();
+
+    if (navId === 'top-10') {
+      cardsArray.sort(function(a, b) {
+        var rA = parseFloat($(a).find('.course-card__rating-value').text()) || 0;
+        var rB = parseFloat($(b).find('.course-card__rating-value').text()) || 0;
+        return rB - rA;
+      });
+      // Show only top 10
+      cardsArray.forEach(function(card, i) {
+        $(card).toggle(i < 10);
+      });
+    } else if (navId === 'populares') {
+      cardsArray.sort(function(a, b) {
+        var rA = parseFloat($(a).find('.course-card__rating-value').text()) || 0;
+        var rB = parseFloat($(b).find('.course-card__rating-value').text()) || 0;
+        return rB - rA;
+      });
+    } else if (navId === 'valorados') {
+      cardsArray.sort(function(a, b) {
+        var rA = parseFloat($(a).find('.course-card__rating-value').text()) || 0;
+        var rB = parseFloat($(b).find('.course-card__rating-value').text()) || 0;
+        return rB - rA;
+      });
+    } else if (navId === 'nuevos') {
+      // Sort by date (newest first) - dates are in DD/MM/YYYY format
+      cardsArray.sort(function(a, b) {
+        var dateA = parseDateFromCard($(a));
+        var dateB = parseDateFromCard($(b));
+        return dateB - dateA;
+      });
+    } else if (navId === 'ofertas') {
+      // Show only discounted courses (those with countdown)
+      $cards.each(function() {
+        var hasDiscount = $(this).find('.course-card__countdown').length > 0;
+        $(this).toggle(hasDiscount);
+      });
+    } else if (navId === 'pre-lanzamiento') {
+      // Show only "Proximo a iniciar"
+      $cards.each(function() {
+        var status = $(this).find('.course-card__status span:last').text().trim();
+        $(this).toggle(status === 'Proximo a iniciar');
+      });
+    }
+
+    // Re-append sorted cards to maintain DOM order
+    if (['top-10', 'populares', 'valorados', 'nuevos'].indexOf(navId) !== -1) {
+      var $grid = $('.courses__grid');
+      cardsArray.forEach(function(card) {
+        $grid.append(card);
+      });
+    }
+
+    updateCount();
+  }
+
+  function parseDateFromCard($card) {
+    var dateText = $card.find('.course-card__date span').text().replace('Inicio : ', '').trim();
+    var parts = dateText.split('/');
+    if (parts.length === 3) {
+      return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
+    }
+    return 0;
+  }
+
+  function updateCount() {
+    var visible = $('.courses__grid-item:visible').length;
+    $('.courses__sort-count-num').text(visible);
+  }
+
+  // ========== Active Filter Tags ==========
   function updateActiveTags() {
     var tags = [];
     var seen = {};
@@ -298,10 +370,6 @@ $(document).ready(function () {
     }
   }
 
-  $(document).on('change', '.sidebar-filter__checkbox-input', function() {
-    updateActiveTags();
-  });
-
   // Remove tag by clicking X
   $(document).on('click', '.js-remove-tag', function() {
     var filterType = $(this).data('filter');
@@ -310,9 +378,7 @@ $(document).ready(function () {
     $checkbox.prop('checked', false).trigger('change');
   });
 
-  // =============================================
-  // Contact form validation (keep existing)
-  // =============================================
+  // ========== Contact Form Validation ==========
   $(".contact__form").on("submit", function (e) {
     e.preventDefault();
 
