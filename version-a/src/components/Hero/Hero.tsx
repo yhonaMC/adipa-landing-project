@@ -6,18 +6,20 @@ import type { HeroProps } from "./Hero.types";
 
 export default function Hero({
   onSearch,
-  searchValue,
   className = "",
 }: HeroProps) {
+  const [localValue, setLocalValue] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+
   function handleChipClick(chip: string) {
+    setLocalValue(chip);
     onSearch(chip);
   }
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setLocalValue(e.target.value);
     onSearch(e.target.value);
   }
-
-  const [isFocused, setIsFocused] = useState(false);
 
   return (
     <div className={`pt-[70px] tablet:pt-[130px] ${className}`}>
@@ -33,14 +35,14 @@ export default function Hero({
         <div className="relative w-full mb-5 max-w-[540px]">
           <input
             type="text"
-            value={searchValue}
+            value={localValue}
             onChange={handleInputChange}
             placeholder="Buscar cursos..."
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             className="w-full text-sm text-white rounded-none outline-none focus-visible:outline-none border-0 border-b-2 border-b-white bg-transparent py-3 pl-0 pr-12 text-[14px] placeholder:text-white/60"
           />
-          {!isFocused && !searchValue && (
+          {!isFocused && !localValue && (
             <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] h-[20px] bg-white animate-blink-cursor" />
           )}
           <span className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-white">

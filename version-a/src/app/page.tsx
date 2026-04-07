@@ -14,7 +14,7 @@ export default function Home() {
     <>
       <Header onSearch={setSearchValue} searchValue={searchValue} />
       <main>
-        <Hero onSearch={setSearchValue} searchValue={searchValue} />
+        <Hero onSearch={setSearchValue} />
         <CourseGrid searchValue={searchValue} />
         <ContactForm />
       </main>
