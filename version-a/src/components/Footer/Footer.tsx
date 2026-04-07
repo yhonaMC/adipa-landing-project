@@ -25,10 +25,7 @@ export default function Footer({ className = "" }: FooterProps) {
       <div className="max-w-container mx-auto px-5 tablet:px-10 py-10 tablet:py-[50px]">
         <div className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-4 gap-8">
           <div>
-            <span className="text-2xl font-bold block mb-4">
-              <span className="text-adipa-brand-purple">ADI</span>
-              <span className="text-adipa-brand-blue">PA</span>
-            </span>
+            <img src="/adipa-logo.svg" alt="ADIPA" className="h-[24px] w-auto mb-4" />
             <p className="text-sm text-white/70 leading-[1.6]">
               Mejorando la Salud Mental del Mundo. Plataforma de educacion
               continua especializada en psicologia y salud mental.

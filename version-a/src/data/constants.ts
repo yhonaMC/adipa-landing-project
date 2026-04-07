@@ -33,8 +33,8 @@ export const QUICK_NAV_OPTIONS = [
   { id: "populares", label: "Más Populares" },
   { id: "valorados", label: "Mejores Valorados" },
   { id: "nuevos", label: "Nuevos Lanzamientos" },
-  { id: "ofertas", label: "Ofertas Flash ⚡" },
-  { id: "pre-lanzamiento", label: "Pre Lanzamiento ⏰" },
+  { id: "ofertas", label: "Ofertas Flash", icon: "⚡" },
+  { id: "pre-lanzamiento", label: "Pre Lanzamiento", icon: "⏰" },
 ];
 
 // Sort options
@@ -52,13 +52,16 @@ export interface NavItem {
   href: string;
   hasDropdown?: boolean;
   isCurrent?: boolean;
+  badge?: string;
+  badgeColor?: string;
+  bold?: boolean;
 }
 
 export const NAV_ITEMS: NavItem[] = [
   { label: "Descubre ADIPA", href: "#descubre", hasDropdown: true },
   { label: "Recursos", href: "#recursos", hasDropdown: true },
-  { label: "Seminarios", href: "#seminarios" },
-  { label: "Congreso", href: "#congreso" },
+  { label: "Seminarios", href: "#seminarios", badge: "GRATIS", badgeColor: "bg-adipa-pink" },
+  { label: "Congreso", href: "#congreso", badge: "NUEVO", badgeColor: "bg-adipa-success", bold: true },
   { label: "Especializaciones", href: "#especializaciones" },
   { label: "Acreditaciones", href: "#acreditaciones" },
   { label: "Sesiones Magistrales", href: "#sesiones-magistrales" },

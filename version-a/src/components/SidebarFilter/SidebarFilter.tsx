@@ -164,6 +164,7 @@ function SidebarInner({ filters, onFiltersChange, onClearFilters, onClose }: Sid
             }`}
           >
             {opt.label}
+            {opt.icon && <span className="text-[20px] ml-1">{opt.icon}</span>}
           </button>
         ))}
       </div>

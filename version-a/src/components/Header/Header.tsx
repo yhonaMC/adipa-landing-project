@@ -1,8 +1,8 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { NAV_ITEMS } from "@/data/constants";
-import type { HeaderProps } from "./Header.types";
+import { useState } from 'react'
+import { NAV_ITEMS } from '@/data/constants'
+import type { HeaderProps } from './Header.types'
 
 function SearchIcon() {
   return (
@@ -21,28 +21,7 @@ function SearchIcon() {
       <circle cx="11" cy="11" r="8" />
       <line x1="21" y1="21" x2="16.65" y2="16.65" />
     </svg>
-  );
-}
-
-function CartIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="9" cy="21" r="1" />
-      <circle cx="20" cy="21" r="1" />
-      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-    </svg>
-  );
+  )
 }
 
 function ChevronDownIcon() {
@@ -62,11 +41,15 @@ function ChevronDownIcon() {
     >
       <polyline points="6 9 12 15 18 9" />
     </svg>
-  );
+  )
 }
 
-export default function Header({ className = "", onSearch, searchValue = "" }: HeaderProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+export default function Header({
+  className = '',
+  onSearch,
+  searchValue = ''
+}: HeaderProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
     <header
@@ -75,20 +58,17 @@ export default function Header({ className = "", onSearch, searchValue = "" }: H
       {/* ── Primary Bar (70px) ── */}
       <div className="h-[70px] border-b border-adipa-border/40">
         <div className="max-w-[1400px] mx-auto px-5 h-full flex items-center justify-between gap-4">
-
           {/* Logo */}
           <a
             href="/"
             className="flex-shrink-0 flex items-center"
             aria-label="ADIPA Home"
           >
-            <span className="text-[38px] font-bold leading-none tracking-tight select-none">
-              <span className="text-adipa-brand-purple">A</span>
-              <span className="text-adipa-brand-blue">D</span>
-              <span className="text-adipa-brand-purple">I</span>
-              <span className="text-adipa-brand-blue">P</span>
-              <span className="text-adipa-brand-purple">A</span>
-            </span>
+            <img
+              src="/adipa-logo.svg"
+              alt="ADIPA"
+              className="h-[40px] w-auto"
+            />
           </a>
 
           {/* Search Bar — desktop only */}
@@ -101,8 +81,7 @@ export default function Header({ className = "", onSearch, searchValue = "" }: H
                 aria-label="Buscar cursos"
                 value={searchValue}
                 onChange={(e) => {
-                  onSearch?.(e.target.value);
-                  document.getElementById("cursos")?.scrollIntoView({ behavior: "smooth" });
+                  onSearch?.(e.target.value)
                 }}
               />
               <button
@@ -110,7 +89,9 @@ export default function Header({ className = "", onSearch, searchValue = "" }: H
                 className="flex-shrink-0 transition-colors duration-200 text-white px-4 flex items-center justify-center bg-adipa-cyan"
                 aria-label="Buscar"
                 onClick={() => {
-                  document.getElementById("cursos")?.scrollIntoView({ behavior: "smooth" });
+                  document
+                    .getElementById('cursos')
+                    ?.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
                 <SearchIcon />
@@ -137,7 +118,11 @@ export default function Header({ className = "", onSearch, searchValue = "" }: H
               className="hover:opacity-80 transition-colors duration-200 text-adipa-purple"
               aria-label="Carrito de compras"
             >
-              <CartIcon />
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+              </svg>
             </button>
           </div>
 
@@ -146,22 +131,22 @@ export default function Header({ className = "", onSearch, searchValue = "" }: H
             type="button"
             className="tablet:hidden flex flex-col justify-center items-center w-9 h-9 gap-[5px] flex-shrink-0"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={isMenuOpen ? "Cerrar menu" : "Abrir menu"}
+            aria-label={isMenuOpen ? 'Cerrar menu' : 'Abrir menu'}
             aria-expanded={isMenuOpen}
           >
             <span
               className={`block w-6 h-[2px] bg-adipa-text-primary transition-all duration-300 origin-center ${
-                isMenuOpen ? "rotate-45 translate-y-[7px]" : ""
+                isMenuOpen ? 'rotate-45 translate-y-[7px]' : ''
               }`}
             />
             <span
               className={`block w-6 h-[2px] bg-adipa-text-primary transition-all duration-300 ${
-                isMenuOpen ? "opacity-0 scale-x-0" : ""
+                isMenuOpen ? 'opacity-0 scale-x-0' : ''
               }`}
             />
             <span
               className={`block w-6 h-[2px] bg-adipa-text-primary transition-all duration-300 origin-center ${
-                isMenuOpen ? "-rotate-45 -translate-y-[7px]" : ""
+                isMenuOpen ? '-rotate-45 -translate-y-[7px]' : ''
               }`}
             />
           </button>
@@ -170,24 +155,32 @@ export default function Header({ className = "", onSearch, searchValue = "" }: H
 
       {/* ── Secondary Bar (60px, desktop only) ── */}
       <nav
-        className="hidden tablet:flex h-[60px] items-center"
+        className="hidden tablet:flex h-[70px] items-center"
         aria-label="Navegacion secundaria"
       >
-        <div className="max-w-[1400px] mx-auto px-5 w-full flex items-center gap-0 overflow-x-auto">
+        <div className="max-w-[1400px] mx-auto px-5 w-full flex items-center gap-0">
           {NAV_ITEMS.map((item) => (
             <a
               key={item.href}
               href={item.href}
               className={`
-                flex-shrink-0 flex items-center gap-0.5 px-3 py-2 text-sm whitespace-nowrap transition-colors duration-200
+                relative flex-shrink-0 flex items-center gap-0.5 px-3 py-2 whitespace-nowrap transition-colors duration-200
+                ${item.bold ? 'text-[15px] font-bold' : 'text-sm'}
                 ${
                   item.isCurrent
-                    ? "font-bold text-adipa-purple border-b-2 border-adipa-purple"
-                    : "font-normal text-adipa-text-primary hover:text-adipa-purple"
+                    ? 'font-bold text-adipa-purple border-b-2 border-adipa-purple'
+                    : 'font-normal text-adipa-text-primary hover:text-adipa-purple'
                 }
               `}
-              aria-current={item.isCurrent ? "page" : undefined}
+              aria-current={item.isCurrent ? 'page' : undefined}
             >
+              {item.badge && (
+                <span
+                  className={`${item.badgeColor} absolute -top-1.5 right-1 text-white text-[9px] font-bold px-2 py-[1px] rounded-full leading-tight`}
+                >
+                  {item.badge}
+                </span>
+              )}
               {item.label}
               {item.hasDropdown && <ChevronDownIcon />}
             </a>
@@ -198,25 +191,22 @@ export default function Header({ className = "", onSearch, searchValue = "" }: H
       {/* ── Mobile Menu (full-width dropdown) ── */}
       <div
         className={`tablet:hidden bg-white border-t border-adipa-border overflow-hidden transition-all duration-300 ${
-          isMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+          isMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
         }`}
         aria-hidden={!isMenuOpen}
       >
-        <nav
-          className="px-5 py-4"
-          aria-label="Navegacion movil"
-        >
+        <nav className="px-5 py-4" aria-label="Navegacion movil">
           {NAV_ITEMS.map((item) => (
             <a
               key={item.href}
               href={item.href}
               className={`flex items-center justify-between py-3 text-sm border-b border-adipa-border/50 last:border-0 transition-colors duration-200 ${
                 item.isCurrent
-                  ? "font-bold text-adipa-purple"
-                  : "font-medium text-adipa-text-primary hover:text-adipa-purple"
+                  ? 'font-bold text-adipa-purple'
+                  : 'font-medium text-adipa-text-primary hover:text-adipa-purple'
               }`}
               onClick={() => setIsMenuOpen(false)}
-              aria-current={item.isCurrent ? "page" : undefined}
+              aria-current={item.isCurrent ? 'page' : undefined}
             >
               <span>{item.label}</span>
               {item.hasDropdown && (
@@ -258,5 +248,5 @@ export default function Header({ className = "", onSearch, searchValue = "" }: H
         </nav>
       </div>
     </header>
-  );
+  )
 }

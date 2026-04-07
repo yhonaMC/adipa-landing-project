@@ -1,35 +1,35 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { courses } from "@/data/courses";
-import { Modality } from "@/types";
-import CourseCard from "@/components/CourseCard/CourseCard";
-import SidebarFilter from "@/components/SidebarFilter/SidebarFilter";
-import SortDropdown from "@/components/SortDropdown/SortDropdown";
-import type { FilterState } from "@/components/SidebarFilter/SidebarFilter.types";
-import type { SortOption } from "@/types";
-import type { CourseGridProps } from "./CourseGrid.types";
+import { useState } from 'react'
+import { courses } from '@/data/courses'
+import { Modality } from '@/types'
+import CourseCard from '@/components/CourseCard/CourseCard'
+import SidebarFilter from '@/components/SidebarFilter/SidebarFilter'
+import SortDropdown from '@/components/SortDropdown/SortDropdown'
+import type { FilterState } from '@/components/SidebarFilter/SidebarFilter.types'
+import type { SortOption } from '@/types'
+import type { CourseGridProps } from './CourseGrid.types'
 
 const DEFAULT_FILTERS: FilterState = {
   categories: [],
   modalities: [],
   priceRange: [0, 600000],
-  quickNav: null,
-};
+  quickNav: null
+}
 
 function parseDate(dateStr: string): Date {
   // Format: "DD/MM/YYYY"
-  const [day, month, year] = dateStr.split("/").map(Number);
-  return new Date(year, month - 1, day);
+  const [day, month, year] = dateStr.split('/').map(Number)
+  return new Date(year, month - 1, day)
 }
 
 export default function CourseGrid({
-  searchValue = "",
-  className = "",
+  searchValue = '',
+  className = ''
 }: CourseGridProps) {
-  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
-  const [sortOption, setSortOption] = useState<SortOption>("todos");
-  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS)
+  const [sortOption, setSortOption] = useState<SortOption>('todos')
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
 
   // --- Filter ---
   const filteredCourses = courses.filter((course) => {
@@ -37,64 +37,79 @@ export default function CourseGrid({
       filters.categories.length > 0 &&
       !filters.categories.includes(course.category)
     ) {
-      return false;
+      return false
     }
 
     if (
       filters.modalities.length > 0 &&
       !filters.modalities.includes(course.modality as Modality)
     ) {
-      return false;
+      return false
     }
 
     if (
       course.discountPrice < filters.priceRange[0] ||
       course.discountPrice > filters.priceRange[1]
     ) {
-      return false;
+      return false
     }
 
     if (searchValue.trim()) {
-      const q = searchValue.trim().toLowerCase();
-      const inTitle = course.title.toLowerCase().includes(q);
-      const inCategory = (course.category ?? "").toLowerCase().includes(q);
-      if (!inTitle && !inCategory) return false;
+      const q = searchValue.trim().toLowerCase()
+      const inTitle = course.title.toLowerCase().includes(q)
+      const inCategory = (course.category ?? '').toLowerCase().includes(q)
+      if (!inTitle && !inCategory) return false
     }
 
-    return true;
-  });
+    return true
+  })
 
   // --- Quick Nav ---
-  let quickNavCourses = [...filteredCourses];
-  if (filters.quickNav === "top-10") {
-    quickNavCourses = quickNavCourses.sort((a, b) => b.rating - a.rating).slice(0, 10);
-  } else if (filters.quickNav === "populares") {
-    quickNavCourses = quickNavCourses.sort((a, b) => b.reviewCount - a.reviewCount);
-  } else if (filters.quickNav === "valorados") {
-    quickNavCourses = quickNavCourses.sort((a, b) => b.rating - a.rating);
-  } else if (filters.quickNav === "nuevos") {
-    quickNavCourses = quickNavCourses.sort((a, b) => parseDate(b.startDate).getTime() - parseDate(a.startDate).getTime());
-  } else if (filters.quickNav === "ofertas") {
-    quickNavCourses = quickNavCourses.filter((c) => c.discountPrice < c.originalPrice);
-  } else if (filters.quickNav === "pre-lanzamiento") {
-    quickNavCourses = quickNavCourses.filter((c) => c.status === "Proximo a iniciar");
+  let quickNavCourses = [...filteredCourses]
+  if (filters.quickNav === 'top-10') {
+    quickNavCourses = quickNavCourses
+      .sort((a, b) => b.rating - a.rating)
+      .slice(0, 10)
+  } else if (filters.quickNav === 'populares') {
+    quickNavCourses = quickNavCourses.sort(
+      (a, b) => b.reviewCount - a.reviewCount
+    )
+  } else if (filters.quickNav === 'valorados') {
+    quickNavCourses = quickNavCourses.sort((a, b) => b.rating - a.rating)
+  } else if (filters.quickNav === 'nuevos') {
+    quickNavCourses = quickNavCourses.sort(
+      (a, b) =>
+        parseDate(b.startDate).getTime() - parseDate(a.startDate).getTime()
+    )
+  } else if (filters.quickNav === 'ofertas') {
+    quickNavCourses = quickNavCourses.filter(
+      (c) => c.discountPrice < c.originalPrice
+    )
+  } else if (filters.quickNav === 'pre-lanzamiento') {
+    quickNavCourses = quickNavCourses.filter(
+      (c) => c.status === 'Proximo a iniciar'
+    )
   }
 
   // --- Sort ---
   const sortedCourses = [...quickNavCourses].sort((a, b) => {
     switch (sortOption) {
-      case "mayor-precio":
-        return b.discountPrice - a.discountPrice;
-      case "menor-precio":
-        return a.discountPrice - b.discountPrice;
-      case "mas-proximo":
-        return parseDate(a.startDate).getTime() - parseDate(b.startDate).getTime();
-      case "menos-proximo":
-        return parseDate(b.startDate).getTime() - parseDate(a.startDate).getTime();
+      case 'mayor-precio':
+        return b.discountPrice - a.discountPrice
+      case 'menor-precio':
+        return a.discountPrice - b.discountPrice
+      case 'mas-proximo':
+        return (
+          parseDate(a.startDate).getTime() - parseDate(b.startDate).getTime()
+        )
+      case 'menos-proximo':
+        return (
+          parseDate(b.startDate).getTime() - parseDate(a.startDate).getTime()
+        )
       default:
-        return 0;
+        return 0
     }
-  });
+  })
 
   return (
     <section
@@ -129,10 +144,7 @@ export default function CourseGrid({
             Filtros
           </button>
           <div className="flex-1">
-            <SortDropdown
-              value={sortOption}
-              onChange={setSortOption}
-            />
+            <SortDropdown value={sortOption} onChange={setSortOption} />
           </div>
         </div>
 
@@ -149,42 +161,15 @@ export default function CourseGrid({
           {/* Main content */}
           <div className="flex-1 min-w-0">
             {/* BlackSale promotional banner */}
-            <div className="relative overflow-hidden rounded-[10px] mb-6 flex items-center justify-center py-8 tablet:py-10" style={{ background: "linear-gradient(135deg, #0a1628 0%, #152244 50%, #0f1b3d 100%)" }}>
-              {/* Decorative stars */}
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <span className="absolute top-[10%] left-[5%] w-1 h-1 bg-white/40 rounded-full" />
-                <span className="absolute top-[20%] left-[15%] w-[3px] h-[3px] bg-white/25 rounded-full" />
-                <span className="absolute top-[15%] right-[10%] w-1 h-1 bg-white/35 rounded-full" />
-                <span className="absolute top-[60%] right-[20%] w-[2px] h-[2px] bg-white/30 rounded-full" />
-                <span className="absolute bottom-[20%] left-[25%] w-[3px] h-[3px] bg-white/20 rounded-full" />
-                <span className="absolute top-[40%] left-[40%] w-1 h-1 bg-white/15 rounded-full" />
-                <span className="absolute bottom-[30%] right-[35%] w-[2px] h-[2px] bg-white/25 rounded-full" />
-                <span className="absolute top-[70%] left-[60%] w-1 h-1 bg-white/20 rounded-full" />
-                <span className="absolute top-[25%] right-[40%] w-[3px] h-[3px] bg-white/15 rounded-full" />
-                <span className="absolute bottom-[15%] right-[5%] w-1 h-1 bg-white/30 rounded-full" />
-              </div>
-              {/* Banner content */}
-              <div className="flex items-center gap-4 tablet:gap-6 z-[1]">
-                <span className="text-white font-black text-[24px] tablet:text-[36px] tracking-tight">
-                  <span className="text-[#1a3a7a]">BLACK</span><span className="text-[#c62828]">SALE</span><span className="text-white">.CL</span>
-                </span>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-white font-black text-[48px] tablet:text-[72px] leading-none">35</span>
-                  <div className="flex flex-col">
-                    <span className="text-white font-black text-[20px] tablet:text-[28px] leading-none">%</span>
-                    <span className="text-white font-medium text-[12px] tablet:text-[16px] leading-none">Hasta</span>
-                  </div>
-                  <span className="text-[#c62828] font-black text-[36px] tablet:text-[52px] leading-none">OFF</span>
-                </div>
-              </div>
-            </div>
+            <img
+              src="/banner1-1.webp"
+              alt="Black Sale - Hasta 35% OFF"
+              className="w-full rounded-[10px] mb-6"
+            />
 
             {/* Sort bar — desktop only */}
             <div className="hidden tablet:block mb-5">
-              <SortDropdown
-                value={sortOption}
-                onChange={setSortOption}
-              />
+              <SortDropdown value={sortOption} onChange={setSortOption} />
             </div>
 
             {/* Grid */}
@@ -193,7 +178,11 @@ export default function CourseGrid({
               role="list"
             >
               {sortedCourses.map((course) => (
-                <div key={course.id} className="animate-fade-in h-full" role="listitem">
+                <div
+                  key={course.id}
+                  className="animate-fade-in h-full"
+                  role="listitem"
+                >
                   <CourseCard course={course} />
                 </div>
               ))}
@@ -208,5 +197,5 @@ export default function CourseGrid({
         </div>
       </div>
     </section>
-  );
+  )
 }
