@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <>
-      <Header onSearch={setSearchValue} searchValue={searchValue} />
+      <Header onSearch={setSearchValue} />
       <main>
         <Hero onSearch={setSearchValue} />
         <CourseGrid searchValue={searchValue} />

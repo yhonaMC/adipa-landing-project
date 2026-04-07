@@ -46,10 +46,10 @@ function ChevronDownIcon() {
 
 export default function Header({
   className = '',
-  onSearch,
-  searchValue = ''
+  onSearch
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [localSearch, setLocalSearch] = useState('')
 
   return (
     <header
@@ -79,8 +79,9 @@ export default function Header({
                 placeholder="¿Que quieres aprender?"
                 className="flex-1 px-4 py-2.5 text-sm text-adipa-text-primary placeholder:text-adipa-text-secondary/70 bg-transparent outline-none"
                 aria-label="Buscar cursos"
-                value={searchValue}
+                value={localSearch}
                 onChange={(e) => {
+                  setLocalSearch(e.target.value)
                   onSearch?.(e.target.value)
                 }}
               />
